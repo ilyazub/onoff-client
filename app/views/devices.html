@@ -1,0 +1,9 @@
+<section class="devices">
+  <header class="row">
+    <h2 class="subheader">Устройства</h2>
+  </header>
+
+  <ul id="devices" class="row devices-list">
+    <li ng-repeat="device in devices" class="small-4 columns columns devices-list--item" ng-click="addToCart(device)">{{device.title}}</li>
+  </ul>
+</section>

@@ -1,0 +1,52 @@
+.devices {
+  .devices-list {
+    padding: 1em;
+
+    border: 1px solid #000;
+    border-radius: 0.5em;
+
+    $size_of_side: 2em;
+
+    .devices-list--item {
+      position: relative;
+
+      padding: 0.5em 0 0.5em 3.5em;
+
+      line-height: $size_of_side;
+
+      cursor: pointer;
+
+      transition: 100ms linear all;
+
+      &:before {
+        position: absolute;
+
+        content: "";
+
+        width: $size_of_side;
+        height: $size_of_side;
+
+        top: 0.5em;
+        left: 0.75em;
+
+        border: 1px solid #000;
+      }
+
+      &:hover {
+        background-color: #aaa;
+      }
+    }
+  }
+}
+
+.device_series {
+  .device_series__item:not(:first-child) {
+    margin-top: 2em;
+  }
+
+  .device_series--list {
+    .device_series--list__item:not(:first-child) {
+      margin-top: 1em;
+    }
+  }
+}
