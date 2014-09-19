@@ -12,31 +12,30 @@ angular
   .controller 'DevicesCtrl', [
     '$scope'
     '$localStorage'
+    'Restangular'
     'Carts'
     'Devices'
     'CartItems'
-    ($scope, localStorage, Carts, Devices, CartItems) ->
+    ($scope, localStorage, Restangular, Carts, Devices, CartItems) ->
       if $scope.storedCart = localStorage.cart
         Carts.one($scope.storedCart.id).put().then(
           (cart) ->
-            console.log 'update', cart
-
             $scope.cart = cart
             $scope.storedCart = localStorage.$reset(
-              cart:
-                id: cart.id
+              cart: cart.plain()
             )
+
+            Restangular.restangularizeCollection(cart, cart.cart_items, 'items')
         )
       else
         Carts.post().then(
           (cart) ->
-            console.log 'create', cart
-
             $scope.cart = cart
             $scope.storedCart = localStorage.$reset(
-              cart:
-                id: cart.id
+              cart: cart.plain()
             )
+
+            Restangular.restangularizeCollection(cart, cart.cart_items, 'items')
         )
 
       Devices.getList().then(
@@ -45,17 +44,36 @@ angular
       )
 
       $scope.addToCart = (device) ->
-        $scope.cart.id = $scope.session.id
-
-        $scope.cart.post(
-          'cart_items',
-          cart_item:
-            device_id: device.id
-            amount: 1
+        $scope.cart.cart_items.post(
+          device_id: device.id
+          amount: 1
         ).then(
           (cartItem) ->
-            console.log cartItem
+            index = $scope.cart.cart_items.indexOf(cartItem)
+
+            if index is -1
+              $scope.cart.cart_items.push(cartItem)
           (error) ->
             console.log error
         )
+
+      $scope.updateItem = (cartItem) ->
+        cartItem.put().then(
+          (status) ->
+            console.log status
+          (error) ->
+            console.log error
+        )
+
+      $scope.deleteItem = (cartItem) ->
+        cartItem.remove().then(
+          (status) ->
+            index = $scope.cart.cart_items.indexOf(cartItem)
+            if index > -1 && status
+              $scope.cart.cart_items.splice(index, 1)
+          (error) ->
+            console.log error
+        )
+
+      $scope
   ]
