@@ -24,8 +24,8 @@ angular
     ($routeProvider) ->
       $routeProvider
         .when '/',
-          templateUrl: 'views/devices.html'
-          controller: 'DevicesCtrl'
+          templateUrl: 'views/foreman.html'
+          controller: 'ForemanCtrl'
         .otherwise
           redirectTo: '/'
   ]

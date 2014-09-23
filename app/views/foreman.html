@@ -1,0 +1,31 @@
+<section class="foreman">
+  <ul class="row devices-list">
+    <li ng-repeat="device in devices" class="small-4 columns item" ng-dblclick="addToCart(device)" draggable="true" json-data="stringify(device)">
+      {{device.title}}
+    </li>
+  </ul>
+
+  <article class="cartItems">
+    <header class="row collapse header" ng-show="cart.cart_items.length">
+      <div class="small-9 columns">Название</div>
+      <div class="small-3 columns">Количество</div>
+    </header>
+    <ul class="row collapse list">
+      <li ng-repeat="cartItem in cart.cart_items" class="small-12 columns item" ng-class="{ first: $first, odd: $odd, even: $even }">
+        <div class="row collapse">
+          <h4 class="small-9 columns title">{{cartItem.device.title}}</h4>
+          <form class="small-1 columns">
+            <input type="number" ng-model="cartItem.amount" ng-change="updateItem(cartItem)" class="small-1 columns" required min="1">
+          </form>
+          <form class="small-2 columns" ng-submit="deleteItem(cartItem)">
+            <input type="submit" value="Удалить" class="medium button alert postfix">
+          </form>
+        </div>
+      </li>
+    </ul>
+
+    <div droparea class="droparea row text-center" ng-class="{ highlight: isDragEnterred }" drop="addToCart">
+      <span>Перетащите устройство сюда</span>
+    </div>
+  </article>
+</section>

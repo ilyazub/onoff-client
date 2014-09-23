@@ -1,0 +1,18 @@
+[draggable] {
+  user-select: none;
+
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+
+.droparea {
+  margin-top: 1em;
+
+  padding: 2em 0;
+
+  border: 2px dashed #7af;
+
+  &.highlight {
+    border: 2px solid #7af;
+  }
+}

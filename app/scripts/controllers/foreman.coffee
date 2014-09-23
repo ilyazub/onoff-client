@@ -2,14 +2,14 @@
 
 ###*
  # @ngdoc function
- # @name onoffClientApp.controller:DevicesCtrl
+ # @name onoffClientApp.controller:ForemanCtrl
  # @description
- # # DevicesCtrl
+ # # ForemanCtrl
  # Controller of the onoffClientApp
 ###
 angular
   .module('onoffClientApp')
-  .controller 'DevicesCtrl', [
+  .controller 'ForemanCtrl', [
     '$scope'
     '$localStorage'
     'Restangular'
@@ -75,5 +75,6 @@ angular
             console.log error
         )
 
-      $scope
+      $scope.stringify = (object) ->
+        JSON.stringify(object.plain())
   ]

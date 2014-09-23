@@ -1,5 +1,6 @@
-.devices {
+.foreman {
   .devices-list {
+    margin-bottom: 1em;
     padding: 1em;
 
     border: 1px solid #000;
@@ -7,7 +8,7 @@
 
     $size_of_side: 2em;
 
-    .devices-list--item {
+    .item {
       position: relative;
 
       padding: 0.5em 0 0.5em 3.5em;
@@ -16,7 +17,7 @@
 
       cursor: pointer;
 
-      transition: 100ms linear all;
+      transition: 100ms linear background-color;
 
       &:before {
         position: absolute;
@@ -37,16 +38,33 @@
       }
     }
   }
-}
 
-.device_series {
-  .device_series__item:not(:first-child) {
-    margin-top: 2em;
-  }
+  .cartItems {
+    .header {
+      margin-bottom: 0.5em;
+    }
 
-  .device_series--list {
-    .device_series--list__item:not(:first-child) {
-      margin-top: 1em;
+    .list {
+      .item {
+        margin-top: 1em;
+        padding-top: 1.25em;
+
+        &.first {
+          margin-top: 0;
+        }
+
+        &.odd {
+          background-color: #ebe7ff;
+        }
+
+        &.even {
+          background-color: #39f;
+        }
+
+        .title {
+          margin: 0;
+        }
+      }
     }
   }
 }
