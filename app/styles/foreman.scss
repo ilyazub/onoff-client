@@ -68,3 +68,15 @@
     }
   }
 }
+
+.droparea {
+  margin-top: 1em;
+
+  padding: 2em 0;
+
+  border: 2px dashed #7af;
+
+  &.highlight {
+    border: 2px solid #7af;
+  }
+}

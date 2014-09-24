@@ -6,6 +6,10 @@
   </ul>
 
   <article class="cartItems">
+    <div droparea class="droparea row text-center" drop="addToCart" highlight-class="highlight">
+      <span>Перетащите устройство сюда</span>
+    </div>
+
     <header class="row collapse header" ng-show="cart.cart_items.length">
       <div class="small-9 columns">Название</div>
       <div class="small-3 columns">Количество</div>
@@ -23,9 +27,5 @@
         </div>
       </li>
     </ul>
-
-    <div droparea class="droparea row text-center" ng-class="{ highlight: isDragEnterred }" drop="addToCart">
-      <span>Перетащите устройство сюда</span>
-    </div>
   </article>
 </section>

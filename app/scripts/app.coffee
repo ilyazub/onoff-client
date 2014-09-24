@@ -18,6 +18,7 @@ angular
     'ngTouch'
     'restangular'
     'ngStorage'
+    'ilyazub.dragndrop-object'
   ])
   .config [
     '$routeProvider'
