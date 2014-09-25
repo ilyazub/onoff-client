@@ -1,0 +1,41 @@
+.devices-list {
+  margin-bottom: 2em;
+  padding: 1em;
+
+  border: 1px solid #073642;
+  border-radius: 0.5em;
+
+  $size_of_side: 2em;
+
+  .item {
+    position: relative;
+
+    padding: 0.5em 0 0.5em 3.5em;
+
+    line-height: $size_of_side;
+    color: #073642;
+
+    cursor: pointer;
+
+    transition: 100ms linear background-color;
+
+    &:before {
+      position: absolute;
+
+      content: "";
+
+      width: $size_of_side;
+      height: $size_of_side;
+
+      top: 0.5em;
+      left: 0.75em;
+
+      border: 1px solid #073642;
+    }
+
+    &:hover {
+      color: #002b36;
+      background-color: #839496;
+    }
+  }
+}

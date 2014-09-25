@@ -1,0 +1,52 @@
+.cartItems {
+  margin-bottom: 2em;
+
+  .droparea {
+    margin-bottom: 1.5em;
+
+    padding: 2em 0;
+
+    border: 2px dashed #839496;
+    color: #657b83;
+
+    &.highlight {
+      border: 2px solid #839496;
+    }
+  }
+
+  .header {
+    margin-bottom: 0.5em;
+
+    color: #586e75;
+  }
+
+  .list {
+    .item {
+      padding-top: 0.5em;
+
+      .title {
+        margin: 0;
+
+        line-height: 2.25;
+        color: #073642;
+      }
+
+      input,
+      .button {
+        margin-bottom: 0.5em;
+      }
+
+      &.first {
+        margin-top: 0;
+      }
+
+      &.even {
+        background-color: #eee8d5;
+      }
+
+      &.odd {
+        background-color: #fdf6e3;
+      }
+    }
+  }
+}
