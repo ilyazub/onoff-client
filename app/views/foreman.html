@@ -17,7 +17,7 @@
 
   </div>
 
-  <article class="cartItems">
+  <article class="cart-items">
     <div droparea class="droparea row text-center" drop="addToCart" highlight-class="highlight">
       <span>Перетащите устройство сюда</span>
     </div>
@@ -41,11 +41,15 @@
     </ul>
   </article>
 
-  <article class="device-series">
-    <form class="row">
-      <div class="small-12 colums">
-        <button class="medium button right">Показать серии</button>
-      </div>
-    </form>
+  <article class="series" ng-show="cart.cart_items.series.length">
+    <header class="row">
+      <h3>Серии</h3>
+    </header>
+
+    <ul class="row list">
+      <li class="small-12 columns item" ng-repeat="serie in cart.cart_items.series">
+        {{serie.title}}
+      </li>
+    </ul>
   </article>
 </section>

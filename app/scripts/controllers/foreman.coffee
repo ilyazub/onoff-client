@@ -22,20 +22,20 @@ angular
           (cart) ->
             $scope.cart = cart
             $scope.storedCart = localStorage.$reset(
-              cart: cart.plain()
+              cart: angular.copy(cart.plain())
             )
 
-            Restangular.restangularizeCollection(cart, cart.cart_items, 'items')
+            cart.restangularizeChildren()
         )
       else
         Carts.post().then(
           (cart) ->
             $scope.cart = cart
             $scope.storedCart = localStorage.$reset(
-              cart: cart.plain()
+              cart: angular.copy(cart.plain())
             )
 
-            Restangular.restangularizeCollection(cart, cart.cart_items, 'items')
+            cart.restangularizeChildren()
         )
 
       Devices.getList().then(
@@ -49,10 +49,7 @@ angular
           amount: 1
         ).then(
           (cartItem) ->
-            index = $scope.cart.cart_items.indexOf(cartItem)
-
-            if index is -1
-              $scope.cart.cart_items.push(cartItem)
+            $scope.cart.cart_items.add(cartItem)
           (error) ->
             console.log error
         )
@@ -60,6 +57,7 @@ angular
       $scope.updateItem = (cartItem) ->
         cartItem.put().then(
           (status) ->
+            status is 'true' && $scope.cart.cart_items.restangularizeSeries()
             console.log status
           (error) ->
             console.log error
@@ -68,13 +66,8 @@ angular
       $scope.deleteItem = (cartItem) ->
         cartItem.remove().then(
           (status) ->
-            index = $scope.cart.cart_items.indexOf(cartItem)
-            if index > -1 && status
-              $scope.cart.cart_items.splice(index, 1)
+            $scope.cart.cart_items.delete(cartItem, status)
           (error) ->
             console.log error
         )
-
-      $scope.stringify = (object) ->
-        JSON.stringify(object.plain())
   ]
