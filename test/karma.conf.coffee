@@ -17,14 +17,15 @@ module.exports = (config) ->
       'bower_components/angular-resource/angular-resource.js'
       'bower_components/angular-route/angular-route.js'
       'bower_components/angular-sanitize/angular-sanitize.js'
-      'bower_components/angular-touch/angular-touch.js',
-      'bower_components/lodash/dist/lodash.compat.js',
-      'bower_components/restangular/dist/restangular.js',
-      'bower_components/ngstorage/ngStorage.js',
-      'bower_components/fastclick/lib/fastclick.js',
-      'bower_components/jquery.cookie/jquery.cookie.js',
-      'bower_components/jquery-placeholder/jquery.placeholder.js',
-      'bower_components/foundation/js/foundation.js',
+      'bower_components/angular-touch/angular-touch.js'
+      'bower_components/lodash/dist/lodash.compat.js'
+      'bower_components/restangular/dist/restangular.js'
+      'bower_components/ngstorage/ngStorage.js'
+      'bower_components/fastclick/lib/fastclick.js'
+      'bower_components/jquery.cookie/jquery.cookie.js'
+      'bower_components/jquery-placeholder/jquery.placeholder.js'
+      'bower_components/foundation/js/foundation.js'
+      'bower_components/angular-dragndrop-object/dist/angular-dragndrop-object.js'
       'app/scripts/**/*.coffee'
       'test/mock/**/*.coffee'
       'test/spec/**/*.coffee'

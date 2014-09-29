@@ -2,13 +2,13 @@
 
 ###*
  # @ngdoc service
- # @name onoffClientApp.Devices
+ # @name onoffClientApp.DevicesSvc
  # @description
- # # Devices
+ # # DevicesSvc
  # Factory in the onoffClientApp.
 ###
 angular.module('onoffClientApp')
-  .factory 'Devices', [
+  .factory 'DevicesSvc', [
     'Restangular'
     (Restangular) ->
       Restangular.service('devices')

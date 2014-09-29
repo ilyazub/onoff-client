@@ -13,35 +13,18 @@ angular
     '$scope'
     '$localStorage'
     'Restangular'
-    'Carts'
-    'Devices'
-    'CartItems'
+    'CartsModel'
+    'DevicesSvc'
+    'CartItemsSvc'
     ($scope, localStorage, Restangular, Carts, Devices, CartItems) ->
-      if $scope.storedCart = localStorage.cart
-        Carts.one($scope.storedCart.id).put().then(
-          (cart) ->
-            $scope.cart = cart
-            $scope.storedCart = localStorage.$reset(
-              cart: angular.copy(cart.plain())
-            )
+      initializeCart = (cart) ->
+        $scope.cart = cart
 
-            cart.restangularizeChildren()
-        )
-      else
-        Carts.post().then(
-          (cart) ->
-            $scope.cart = cart
-            $scope.storedCart = localStorage.$reset(
-              cart: angular.copy(cart.plain())
-            )
+      initializeDevices = (devices) ->
+        $scope.devices = devices
 
-            cart.restangularizeChildren()
-        )
-
-      Devices.getList().then(
-        (devices) ->
-          $scope.devices = devices
-      )
+      Carts.initialize(initializeCart)
+      Devices.getList().then(initializeDevices)
 
       $scope.addToCart = (device) ->
         $scope.cart.cart_items.post(

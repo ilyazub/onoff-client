@@ -2,13 +2,13 @@
 
 ###*
  # @ngdoc service
- # @name onoffClientApp.CartItems
+ # @name onoffClientApp.CartItemsSvc
  # @description
- # # CartItems
+ # # CartItemsSvc
  # Factory in the onoffClientApp.
 ###
 angular.module('onoffClientApp')
-  .factory 'CartItems', [
+  .factory 'CartItemsSvc', [
     'Restangular'
     (Restangular) ->
       Restangular.extendCollection('cart_items', (collection) ->

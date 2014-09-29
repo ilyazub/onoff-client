@@ -1,0 +1,11 @@
+<article class="series" ng-show="cart.cart_items.series.length">
+  <header class="row">
+    <h3>Серии</h3>
+  </header>
+
+  <ul class="row list">
+    <li class="small-12 columns item" ng-repeat="serie in cart.cart_items.series">
+      {{serie.title}}
+    </li>
+  </ul>
+</article>

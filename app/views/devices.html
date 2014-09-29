@@ -1,0 +1,16 @@
+<article class="row devices-list">
+  <div class="small-4 columns">
+    <ul class="row">
+      <li ng-repeat="device in devices | filter: 'Рамка'" class="small-12 columns item" ng-dblclick="addToCart(device)" draggable="true" json-data="device | json">
+        <span>{{device.title}}</span>
+      </li>
+    </ul>
+  </div>
+  <div class="small-8 columns">
+    <ul class="row">
+      <li ng-repeat="device in devices | filter: '!Рамка'" class="small-6 columns item" ng-dblclick="addToCart(device)" draggable="true" json-data="device | json">
+        <span>{{device.title}}</span>
+      </li>
+    </ul>
+  </div>
+</article>
