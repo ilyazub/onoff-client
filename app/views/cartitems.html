@@ -1,5 +1,5 @@
 <article class="cart-items">
-  <div droparea class="droparea row text-center" drop="addToCart" highlight-class="highlight">
+  <div droparea class="droparea row text-center" drop="cartItems.add" highlight-class="highlight">
     <span>Перетащите устройство сюда</span>
   </div>
 
@@ -12,9 +12,9 @@
       <div class="row collapse">
         <h6 class="small-10 columns title tiny">{{cartItem.device.title}}</h6>
         <form class="small-1 columns">
-          <input type="number" ng-model="cartItem.amount" ng-change="updateItem(cartItem)" class="small-1 columns" required min="1">
+          <input type="number" ng-model="cartItem.amount" ng-change="cartItems.update(cartItem)" class="small-1 columns" required min="1">
         </form>
-        <form class="small-1 columns" ng-submit="deleteItem(cartItem)">
+        <form class="small-1 columns" ng-submit="cartItems.remove(cartItem)">
           <input type="submit" value="Удалить" class="tiny button alert postfix">
         </form>
       </div>
