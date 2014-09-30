@@ -15,28 +15,21 @@ angular.module('onoffClientApp')
         constructor: (@_options) ->
           { @model, @collection, @service } = @_options
 
-        add: (device, callback) =>
+        add: (device) =>
           cartItem = this._newCartItem(device)
 
-          @service?.post(cartItem)
-            .then(
-              (cartItem) =>
-                this._addItem(cartItem)
-                callback?(cartItem)
-            )
-
-        update: (cartItem, callback) ->
-          cartItem.put().then(
-            (status) =>
-              this._updateItem(status)
-              callback?(status)
+          @service?.post(cartItem).then(
+            this._addItem
           )
 
-        remove: (cartItem, callback) ->
+        update: (cartItem) =>
+          cartItem.put().then(
+            this._updateItem
+          )
+
+        remove: (cartItem) =>
           cartItem.remove().then(
-            (status) =>
-              this._deleteItem(cartItem, status)
-              callback?(cartItem, status)
+            angular.bind(this, this._deleteItem, cartItem)
           )
 
         _addItem: (cartItem) =>
@@ -45,7 +38,7 @@ angular.module('onoffClientApp')
         _updateItem: (status) =>
           @service?.restangularizeSeries() if status is 'true'
 
-        _deleteItem: (cartItem, status) =>
+        _deleteItem: (cartItem, status) ->
           @service?.delete(cartItem, status)
 
         _newCartItem: (device) ->
