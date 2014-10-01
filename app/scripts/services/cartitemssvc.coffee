@@ -12,19 +12,17 @@ angular.module('onoffClientApp')
     'Restangular'
     (Restangular) ->
       Restangular.extendCollection('cart_items', (collection) ->
-        collection.restangularizeSeries = ->
-          series = _.flatten(item.series for item in collection)
-
-          collection.series = series
-
-          Restangular.restangularizeCollection(collection, series, 'series')
+        collection.restangularizeNested = ->
+          for item in collection
+            Restangular.restangularizeElement(item, item.device, 'devices')
+            item.device.restangularizeNested()
 
         collection.add = (item) ->
           index = collection.indexOf(item)
 
           if index is -1
             collection.push(item)
-            collection.restangularizeSeries()
+            collection.restangularizeNested()
 
           collection
 
@@ -33,7 +31,7 @@ angular.module('onoffClientApp')
 
           if index > -1 && status is 'true'
             collection.splice(index, 1)
-            collection.restangularizeSeries()
+            collection.restangularizeNested()
 
           collection
 

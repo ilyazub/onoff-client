@@ -15,7 +15,9 @@ angular
     'CartsModel'
     'DevicesSvc'
     'CartItemsModel'
-    ($scope, Restangular, Carts, Devices, CartItems) ->
+    'DeviceSeriesSvc'
+    'DeviceSeriesStockKeepingUnits'
+    ($scope, Restangular, Carts, Devices, CartItems, DeviceSeries, DeviceSeriesStockKeepingUnits) ->
       initializeCart = (cart) ->
         $scope.cart = cart
         $scope.cartItems = new CartItems(service: cart.cart_items)

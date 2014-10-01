@@ -36,7 +36,7 @@ angular.module('onoffClientApp')
           @service?.add(cartItem)
 
         _updateItem: (status) =>
-          @service?.restangularizeSeries() if status is 'true'
+          @service?.restangularizeNested() if status is 'true'
 
         _deleteItem: (cartItem, status) ->
           @service?.delete(cartItem, status)

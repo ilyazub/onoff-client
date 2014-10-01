@@ -37,5 +37,5 @@ angular.module('onoffClientApp')
             cart_items: plainCart.cart_items
         )
 
-        cart.restangularizeChildren()
+        cart.restangularizeNested()
   ]

@@ -3,21 +3,23 @@
     <span>Перетащите устройство сюда</span>
   </div>
 
-  <header class="row header" ng-show="cart.cart_items.length">
-    <div class="small-10 columns">Название</div>
-    <div class="small-2 columns">Количество</div>
-  </header>
-  <ul class="row list">
-    <li ng-repeat="cartItem in cart.cart_items" class="small-12 columns item" ng-class="{ first: $first, odd: $odd, even: $even }">
-      <div class="row collapse">
-        <h6 class="small-10 columns title tiny">{{cartItem.device.title}}</h6>
-        <form class="small-1 columns">
-          <input type="number" ng-model="cartItem.amount" ng-change="cartItems.update(cartItem)" class="small-1 columns" required min="1">
-        </form>
-        <form class="small-1 columns" ng-submit="cartItems.remove(cartItem)">
-          <input type="submit" value="Удалить" class="tiny button alert postfix">
-        </form>
-      </div>
-    </li>
-  </ul>
+  <section ng-show="cart.cart_items.length">
+    <header class="row header">
+      <div class="small-10 columns">Название</div>
+      <div class="small-2 columns">Количество</div>
+    </header>
+    <ul class="row list">
+      <li ng-repeat="cartItem in cart.cart_items" class="small-12 columns item" ng-class="{ first: $first, odd: $odd, even: $even }">
+        <div class="row collapse">
+          <h5 class="small-10 columns title tiny">{{cartItem.device.title}}</h5>
+          <form class="small-1 columns">
+            <input type="number" ng-model="cartItem.amount" ng-change="cartItems.update(cartItem)" class="small-1 columns" required min="1">
+          </form>
+          <form class="small-1 columns" ng-submit="cartItems.remove(cartItem)">
+            <input type="submit" value="Удалить" class="tiny button alert postfix">
+          </form>
+        </div>
+      </li>
+    </ul>
+  </section>
 </article>

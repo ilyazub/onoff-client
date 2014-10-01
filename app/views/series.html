@@ -1,11 +1,34 @@
-<article class="series" ng-show="cart.cart_items.series.length">
+<article class="series" ng-show="cart.cart_items.length">
   <header class="row">
-    <h3>Серии</h3>
+    <h4>Серии</h3>
   </header>
 
   <ul class="row list">
-    <li class="small-12 columns item" ng-repeat="serie in cart.cart_items.series">
-      {{serie.title}}
+    <li class="item" ng-repeat="cartItem in cart.cart_items">
+      <div>
+        <h5 class="small-12 columns title">{{cartItem.device.title}}</h5>
+
+        <ul class="small-12 columns device-series">
+          <li class="row" ng-repeat="device_series in cartItem.device.device_series">
+            <img class="small-1 columns" ng-src="{{device_series.href}}">
+            <h6 class="small-3 columns title">{{device_series.series.title}}</h6>
+
+            <strong class="small-4 columns price">от {{device_series.device_series_stock_keeping_units.price(cartItem.amount) | currency: '' }} грн</strong>
+
+            <!-- <ul class="small-7 columns stock-keeping-units-list">
+              <li ng-repeat="device_series_sku in device_series.device_series_stock_keeping_units" class="item">
+                <span>{{device_series_sku.stock_keeping_unit.title}}</span><span> &mdash; </span><span>{{device_series_sku.amount}} шт.</span>
+              </li>
+            </ul> -->
+
+            <div class="small-4 columns manufacturer">
+              <span>{{device_series.manufacturer.title}}</span><br>
+              <span>{{device_series.manufacturer.country}}</span><br>
+              <span>{{device_series.manufacturer.assembly}}</span><br>
+            </div>
+          </li>
+        </div>
+      </div>
     </li>
   </ul>
 </article>
