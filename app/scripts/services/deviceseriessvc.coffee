@@ -14,8 +14,8 @@ angular.module('onoffClientApp')
       Restangular.extendCollection('device_series', (collection) ->
         collection.restangularizeNested = ->
           for item in collection
-            Restangular.restangularizeCollection(item, item.device_series_stock_keeping_units, 'device_series_stock_keeping_units')
-            item.device_series_stock_keeping_units.restangularizeNested()
+            Restangular.restangularizeCollection(item, item.device_series_markings, 'device_series_markings')
+            item.device_series_markings.restangularizeNested()
 
         collection
       )

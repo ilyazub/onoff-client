@@ -1,10 +1,10 @@
 <article class="series" ng-show="cart.cart_items.length">
   <header class="row">
-    <h4>Серии</h3>
+    <h4 class="small-12 columns">Серии</h3>
   </header>
 
   <ul class="row list">
-    <li class="small-12 columnsitem" ng-repeat="cartItem in cart.cart_items">
+    <li class="small-12 columns item" ng-repeat="cartItem in cart.cart_items">
       <h5 class="row collapse title">{{cartItem.device.title}}</h5>
       <hr>
 
@@ -14,12 +14,14 @@
             <img class="small-1 columns" ng-src="{{deviceSeries.imageSrc}}">
             <h6 class="small-3 columns title">{{deviceSeries.series.title}}</h6>
 
-            <strong class="small-5 columns price">от {{deviceSeries.device_series_stock_keeping_units.price(cartItem.amount) | currency: '' }} грн</strong>
+            <strong class="small-5 columns price">от {{deviceSeries.device_series_markings.price(cartItem.amount) | currency: '' }} грн</strong>
 
             <div class="small-3 columns manufacturer">
               <span>Производитель: {{deviceSeries.manufacturer.title}}</span><br>
               <span>Страна: {{deviceSeries.manufacturer.country}}</span><br>
             </div>
+
+            <div class="small-12 columns toggle"><button class="small-12 columns small" ng-click="deviceSeries.expanded = true">Развернуть</button></div>
           </div>
 
           <div class="expanded" ng-show="deviceSeries.expanded">
@@ -30,23 +32,30 @@
             <div class="row collapse">
               <img class="small-3 columns" ng-src="{{deviceSeries.imageSrc}}">
 
-              <div class="small-9 columns stock-keeping-units">
+              <div class="small-9 columns markings">
                 <p class="row title">Подберите внутренности устройства</p>
 
                 <ul class="row list">
-                  <li class="small-12 columns" ng-repeat="deviceSeriesSku in deviceSeries.device_series_stock_keeping_units" class="item">
+                  <li class="small-12 columns" ng-repeat="deviceSeriesMarking in deviceSeries.device_series_markings" class="item">
+                    <div class="small-4 columns">
+                      {{deviceSeriesMarking.marking.title}}
+                    </div>
                     <ul class="row collapse">
-                      <li ng-repeal="deviceSeriesOption in deviceSeries.device_series_options">
-                        {{deviceSeriesOption}}
+                      <li ng-repeal="option in deviceSeriesMarking.options">
+                        {{option.description}}
                       </li>
                     </ul>
                   </li>
                 </ul>
               </div>
             </div>
-          </div>
 
-          <div class="row collapse"><button class="small-12 columns small toggle" ng-click="deviceSeries.expanded = !deviceSeries.expanded">Toggle</button></div>
+            <div class="row collapse">
+              <strong class="right small-3 columns price">от {{deviceSeries.device_series_markings.price(cartItem.amount) | currency: '' }} грн</strong>
+            </div>
+
+            <div class="row toggle"><button class="small-12 columns small" ng-click="deviceSeries.expanded = false">Свернуть</button></div>
+          </div>
         </li>
       </ul>
     </li>

@@ -2,16 +2,16 @@
 
 ###*
  # @ngdoc service
- # @name onoffClientApp.DeviceSeriesStockKeepingUnits
+ # @name onoffClientApp.DeviceSeriesMarkings
  # @description
- # # DeviceSeriesStockKeepingUnits
+ # # DeviceSeriesMarkings
  # Service in the onoffClientApp.
 ###
 angular.module('onoffClientApp')
-  .service 'DeviceSeriesStockKeepingUnits', [
+  .service 'DeviceSeriesMarkings', [
     'Restangular'
     (Restangular) ->
-      Restangular.extendCollection('device_series_stock_keeping_units', (collection) ->
+      Restangular.extendCollection('device_series_markings', (collection) ->
         collection.price = (amount = 1) ->
           prices = _.reduce(
             collection
@@ -28,15 +28,15 @@ angular.module('onoffClientApp')
         collection
       )
 
-      Restangular.extendModel('device_series_stock_keeping_units', (model) ->
+      Restangular.extendModel('device_series_markings', (model) ->
         model.price = ->
-          model.amount * model.stock_keeping_unit.price
+          model.amount * model.marking.price
 
         model.restangularizeNested = ->
-          Restangular.restangularizeElement(null, model.stock_keeping_unit, 'stock_keeping_unit')
+          Restangular.restangularizeElement(null, model.marking, 'marking')
 
         model
       )
 
-      Restangular.service('device_series_stock_keeping_units')
+      Restangular.service('device_series_markings')
     ]
