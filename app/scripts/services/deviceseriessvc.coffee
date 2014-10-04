@@ -19,5 +19,6 @@ angular.module('onoffClientApp')
 
         collection
       )
+
       Restangular.service('device_series')
   ]

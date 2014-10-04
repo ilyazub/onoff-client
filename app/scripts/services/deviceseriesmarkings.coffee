@@ -33,7 +33,10 @@ angular.module('onoffClientApp')
           model.amount * model.marking.price
 
         model.restangularizeNested = ->
-          Restangular.restangularizeElement(null, model.marking, 'marking')
+          Restangular.restangularizeElement(null, model.marking, 'markings')
+
+          Restangular.restangularizeCollection(model, model.parameters, 'device_series_parameters')
+          model.parameters.restangularizeNested()
 
         model
       )

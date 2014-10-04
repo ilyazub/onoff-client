@@ -30,21 +30,23 @@
             </div>
 
             <div class="row collapse">
-              <img class="small-3 columns" ng-src="{{deviceSeries.imageSrc}}">
+              <img class="small-3 columns" ng-src="{{deviceSeries.image_src}}">
 
               <div class="small-9 columns markings">
-                <p class="row title">Подберите внутренности устройства</p>
+                <header class="row title">
+                  <p class="small-12 columns">Подберите внутренности устройства</p>
+                </header>
 
                 <ul class="row list">
                   <li class="small-12 columns" ng-repeat="deviceSeriesMarking in deviceSeries.device_series_markings" class="item">
-                    <div class="small-4 columns">
-                      {{deviceSeriesMarking.marking.title}}
+                    <div class="row collapse">
+                      <span class="small-4 columns">{{deviceSeriesMarking.marking.title}}</span>
+                      <ul class="small-8 columns">
+                        <li class="row" ng-repeat="parameter in deviceSeriesMarking.parameters">
+                          <img ng-src="{{value.image_src}}" alt="{{value.code}}" class="small-1 columns" ng-repeat="value in parameter.values">
+                        </li>
+                      </ul>
                     </div>
-                    <ul class="row collapse">
-                      <li ng-repeal="option in deviceSeriesMarking.options">
-                        {{option.description}}
-                      </li>
-                    </ul>
                   </li>
                 </ul>
               </div>
@@ -54,7 +56,7 @@
               <strong class="right small-3 columns price">от {{deviceSeries.device_series_markings.price(cartItem.amount) | currency: '' }} грн</strong>
             </div>
 
-            <div class="row toggle"><button class="small-12 columns small" ng-click="deviceSeries.expanded = false">Свернуть</button></div>
+            <div class="row collapse toggle"><button class="small-12 columns small" ng-click="deviceSeries.expanded = false">Свернуть</button></div>
           </div>
         </li>
       </ul>
