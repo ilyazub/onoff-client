@@ -19,7 +19,8 @@ angular
     'MarkingsSvc'
     'DeviceSeriesMarkings'
     'DeviceSeriesParametersSvc'
-    ($scope, Restangular, Carts, Devices, CartItems, DeviceSeries, Markings, DeviceSeriesMarkings, DeviceSeriesParameters) ->
+    'DeviceSeriesParameterValuesSvc'
+    ($scope, Restangular, Carts, Devices, CartItems, DeviceSeries, Markings, DeviceSeriesMarkings, DeviceSeriesParameters, DeviceSeriesParameterValues) ->
       initializeCart = (cart) ->
         $scope.cart = cart
         $scope.cartItems = new CartItems(service: cart.cart_items)

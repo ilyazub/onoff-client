@@ -38,12 +38,14 @@
                 </header>
 
                 <ul class="row list">
-                  <li class="small-12 columns" ng-repeat="deviceSeriesMarking in deviceSeries.device_series_markings" class="item">
+                  <li class="small-12 columns item" ng-repeat="deviceSeriesMarking in deviceSeries.device_series_markings" class="item">
                     <div class="row collapse">
-                      <span class="small-4 columns">{{deviceSeriesMarking.marking.title}}</span>
-                      <ul class="small-8 columns">
-                        <li class="row" ng-repeat="parameter in deviceSeriesMarking.parameters">
-                          <img ng-src="{{value.image_src}}" alt="{{value.code}}" class="small-1 columns" ng-repeat="value in parameter.values">
+                      <span class="small-4 columns title">{{deviceSeriesMarking.marking.title}}</span>
+                      <ul class="small-8 columns parameters">
+                        <li class="row list" ng-repeat="parameter in deviceSeriesMarking.parameters">
+                          <div ng-repeat="value in parameter.values" class="small-1 columns item" ng-class="{ selected: value.selected }" ng-click="parameter.values.select(value)">
+                            <img ng-src="{{value.image_src}}" alt="{{value.code}}" width="100%" height="100%" class="image">
+                          </div>
                         </li>
                       </ul>
                     </div>
@@ -53,7 +55,7 @@
             </div>
 
             <div class="row collapse">
-              <strong class="right small-3 columns price">от {{deviceSeries.device_series_markings.price(cartItem.amount) | currency: '' }} грн</strong>
+              <strong class="right small-2 columns price">от {{deviceSeries.device_series_markings.price(cartItem.amount) | currency: '' }} грн</strong>
             </div>
 
             <div class="row collapse toggle"><button class="small-12 columns small" ng-click="deviceSeries.expanded = false">Свернуть</button></div>
