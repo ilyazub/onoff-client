@@ -1,0 +1,14 @@
+<li class="small-12 columns item" ng-repeat="deviceSeries in cartItem.device.device_series">
+  <div class="row collapse">
+    <h6 class="small-12 columns title">{{deviceSeries.series.title}}</h6>
+  </div>
+
+  <div class="row collapse">
+    <div class="small-3 columns device-series-image" device-series-image></div>
+    <div class="small-9 columns sku-parameters" sku-parameters></div>
+  </div>
+
+  <div class="row collapse">
+    <strong class="small-2 columns right text-right price">{{deviceSeries.device_series_skus.price(cartItem.amount) | currency: '' }} грн</strong>
+  </div>
+</li>

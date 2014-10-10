@@ -29,12 +29,9 @@ angular.module('onoffClientApp')
       initializeCart: (cart, callback) ->
         callback(cart)
 
-        plainCart = angular.copy(cart.plain())
-
         storedCart = localStorage.$reset(
           cart:
-            id: plainCart.id
-            cart_items: plainCart.cart_items
+            id: cart.id
         )
 
         cart.restangularizeNested()

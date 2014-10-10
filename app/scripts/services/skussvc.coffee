@@ -2,13 +2,13 @@
 
 ###*
  # @ngdoc service
- # @name onoffClientApp.MarkingsSvc
+ # @name onoffClientApp.SKUsSvc
  # @description
- # # MarkingsSvc
+ # # SKUsSvc
  # Service in the onoffClientApp.
 ###
 angular.module('onoffClientApp')
-  .service 'MarkingsSvc', [
+  .service 'SKUsSvc', [
     'Restangular'
     (Restangular) ->
       Restangular.service('markings')

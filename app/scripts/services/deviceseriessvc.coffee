@@ -12,12 +12,31 @@ angular.module('onoffClientApp')
     'Restangular'
     (Restangular) ->
       Restangular.extendCollection('device_series', (collection) ->
-        collection.restangularizeNested = ->
-          for item in collection
-            Restangular.restangularizeCollection(item, item.device_series_markings, 'device_series_markings')
-            item.device_series_markings.restangularizeNested()
+        collection.restangularizeNested = (device) ->
+          deviceClone = device.clone()
+          delete deviceClone.device_series
+
+          options =
+            device: deviceClone
+            collection: collection
+
+          model.restangularizeNested() for model in collection
+
+          collection
 
         collection
+      )
+
+      Restangular.extendModel('device_series', (model) ->
+        model.restangularizeNested = (options = {}) ->
+          Restangular.restangularizeCollection(model, model.device_series_skus, 'device_series_skus')
+          model.device_series_skus.restangularizeNested(model)
+
+          model[key] = value for key, value in options
+
+          model
+
+        model
       )
 
       Restangular.service('device_series')

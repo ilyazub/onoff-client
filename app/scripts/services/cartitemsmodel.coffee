@@ -25,21 +25,24 @@ angular.module('onoffClientApp')
         update: (cartItem) =>
           cartItem.put().then(
             this._updateItem
+            (response) ->
+              console.warn response
           )
 
         remove: (cartItem) =>
           cartItem.remove().then(
             angular.bind(this, this._deleteItem, cartItem)
+            (response) ->
+              console.warn response
           )
 
         _addItem: (cartItem) =>
           @service?.add(cartItem)
 
         _updateItem: (status) =>
-          @service?.restangularizeNested() if status is 'true'
 
-        _deleteItem: (cartItem, status) ->
-          @service?.delete(cartItem, status)
+        _deleteItem: (cartItem, newCartItem) ->
+          @service?.delete(cartItem, newCartItem)
 
         _newCartItem: (device) ->
           device_id: device.id

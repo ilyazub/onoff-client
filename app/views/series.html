@@ -8,60 +8,7 @@
       <h5 class="row collapse title">{{cartItem.device.title}}</h5>
       <hr>
 
-      <ul class="row device-series">
-        <li class="small-12 columns item" ng-repeat="deviceSeries in cartItem.device.device_series">
-          <div class="row collapsed" ng-hide="deviceSeries.expanded">
-            <img class="small-1 columns" ng-src="{{deviceSeries.imageSrc}}">
-            <h6 class="small-3 columns title">{{deviceSeries.series.title}}</h6>
-
-            <strong class="small-5 columns price">от {{deviceSeries.device_series_markings.price(cartItem.amount) | currency: '' }} грн</strong>
-
-            <div class="small-3 columns manufacturer">
-              <span>Производитель: {{deviceSeries.manufacturer.title}}</span><br>
-              <span>Страна: {{deviceSeries.manufacturer.country}}</span><br>
-            </div>
-
-            <div class="small-12 columns toggle"><button class="small-12 columns small" ng-click="deviceSeries.expanded = true">Развернуть</button></div>
-          </div>
-
-          <div class="expanded" ng-show="deviceSeries.expanded">
-            <div class="row collapse">
-              <h6 class="small-12 columns title">{{deviceSeries.series.title}}</h6>
-            </div>
-
-            <div class="row collapse">
-              <img class="small-3 columns" ng-src="{{deviceSeries.image_src}}">
-
-              <div class="small-9 columns markings">
-                <header class="row title">
-                  <p class="small-12 columns">Подберите внутренности устройства</p>
-                </header>
-
-                <ul class="row list">
-                  <li class="small-12 columns item" ng-repeat="deviceSeriesMarking in deviceSeries.device_series_markings" class="item">
-                    <div class="row collapse">
-                      <span class="small-4 columns title">{{deviceSeriesMarking.marking.title}}</span>
-                      <ul class="small-8 columns parameters">
-                        <li class="row list" ng-repeat="parameter in deviceSeriesMarking.parameters">
-                          <div ng-repeat="value in parameter.values" class="small-1 columns item" ng-class="{ selected: value.selected }" ng-click="parameter.values.select(value)">
-                            <img ng-src="{{value.image_src}}" alt="{{value.code}}" width="100%" height="100%" class="image">
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="row collapse">
-              <strong class="right small-2 columns price">от {{deviceSeries.device_series_markings.price(cartItem.amount) | currency: '' }} грн</strong>
-            </div>
-
-            <div class="row collapse toggle"><button class="small-12 columns small" ng-click="deviceSeries.expanded = false">Свернуть</button></div>
-          </div>
-        </li>
-      </ul>
+      <ul class="row device-series" device-series></ul>
     </li>
   </ul>
 </article>

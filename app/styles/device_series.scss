@@ -1,0 +1,67 @@
+.series {
+  .list {
+    .item {
+      .title {}
+
+      .device-series {
+        > .item {
+          min-height: 18em;
+
+          .device-series-image {
+            position: relative;
+
+            .layer {
+              position: absolute;
+
+              @for $i from 1 through 5 {
+                &-#{$i} {
+                  z-index: $i;
+                }
+              }
+            }
+          }
+
+          .sku-parameters {
+            .title {}
+
+            .list {
+              .item {
+                .title {}
+
+                .parameters {
+                  .list {
+                    .item {
+                      padding: 0 0.25em 1em 0;
+
+                      cursor: pointer;
+
+                      .image {
+                        position: relative;
+
+                        padding: 0.25em;
+
+                        height: 2.5em;
+                      }
+
+                      &:hover,
+                      &.selected {
+                        .image {
+                          border: 1px solid #000;
+                          border-radius: 5px;
+                        }
+                      }
+
+                      &.selected {
+                        cursor: default;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

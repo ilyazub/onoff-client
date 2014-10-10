@@ -12,31 +12,49 @@ angular.module('onoffClientApp')
     'Restangular'
     (Restangular) ->
       Restangular.extendCollection('cart_items', (collection) ->
-        collection.restangularizeNested = ->
-          for item in collection
-            Restangular.restangularizeElement(item, item.device, 'devices')
-            item.device.restangularizeNested()
-
         collection.add = (item) ->
           index = collection.indexOf(item)
 
           if index is -1
             collection.push(item)
-            collection.restangularizeNested()
+            item.restangularizeNested()
 
           collection
 
-        collection.delete = (item, status) ->
+        collection.delete = (item, newItem) ->
           index = collection.indexOf(item)
 
-          if index > -1 && status is 'true'
+          if index > -1
             collection.splice(index, 1)
-            collection.restangularizeNested()
+            # item.restangularizeNested()
+
+          collection
+
+        collection.restangularizeNested = ->
+          model.restangularizeNested() for model in collection
 
           collection
 
         collection
       )
 
-      Restangular.service('cart_items')
+      Restangular.extendModel('cart_items', (model) ->
+        model.restangularizeNested = ->
+          Restangular.restangularizeElement(null, model.device, 'devices')
+          model.device.restangularizeNested()
+
+          model
+
+        model
+      )
+
+      Restangular.addResponseInterceptor(
+        (data, operation, what, url, response, deferred) ->
+          if what is 'cart_items' and operation in [ 'put', 'remove' ] and typeof data is "string"
+            {}
+          else
+            data
+      )
+
+      service = Restangular.service('cart_items')
   ]

@@ -13,8 +13,12 @@ angular.module('onoffClientApp')
     (Restangular) ->
       Restangular.extendModel('devices', (model) ->
         model.restangularizeNested = ->
-          Restangular.restangularizeCollection(model, model.device_series, 'device_series')
-          model.device_series.restangularizeNested()
+          model.getList('device_series').then(
+            (device_series) ->
+              model.device_series = device_series
+              Restangular.restangularizeCollection(model, model.device_series, 'device_series')
+              model.device_series.restangularizeNested(model)
+          )
 
         model
       )

@@ -16,11 +16,11 @@ angular
     'DevicesSvc'
     'CartItemsModel'
     'DeviceSeriesSvc'
-    'MarkingsSvc'
-    'DeviceSeriesMarkings'
-    'DeviceSeriesParametersSvc'
-    'DeviceSeriesParameterValuesSvc'
-    ($scope, Restangular, Carts, Devices, CartItems, DeviceSeries, Markings, DeviceSeriesMarkings, DeviceSeriesParameters, DeviceSeriesParameterValues) ->
+    'SKUsSvc'
+    'DeviceSeriesSKUsSvc'
+    'ParametersSvc'
+    'ParameterValuesSvc'
+    ($scope, Restangular, Carts, Devices, CartItems, DeviceSeries, SKUs, DeviceSeriesSKUs, Parameters, ParameterValues) ->
       initializeCart = (cart) ->
         $scope.cart = cart
         $scope.cartItems = new CartItems(service: cart.cart_items)
