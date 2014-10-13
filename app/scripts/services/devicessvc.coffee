@@ -12,6 +12,12 @@ angular.module('onoffClientApp')
     'Restangular'
     (Restangular) ->
       Restangular.extendModel('devices', (model) ->
+        model.toJSON = ->
+          clone = model.plain()
+          delete clone.device_series
+
+          clone
+
         model.restangularizeNested = ->
           model.getList('device_series').then(
             (device_series) ->

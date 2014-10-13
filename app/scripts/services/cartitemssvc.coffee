@@ -26,7 +26,6 @@ angular.module('onoffClientApp')
 
           if index > -1
             collection.splice(index, 1)
-            # item.restangularizeNested()
 
           collection
 

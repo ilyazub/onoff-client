@@ -22,6 +22,13 @@ angular.module('onoffClientApp')
 
           price = amount * prices
 
+        collection.hasParameters = ->
+          for model in collection
+            if model.parameters.length > 0
+              return true
+
+          return false
+
         collection.restangularizeNested = (deviceSeries) ->
           deviceSeriesClone = deviceSeries.clone()
           delete deviceSeriesClone.device_series_skus
@@ -40,6 +47,7 @@ angular.module('onoffClientApp')
         model.toJSON = ->
           clone = model.clone()
           delete clone.device_series
+          delete clone.parameters
 
           clone
 
@@ -47,10 +55,8 @@ angular.module('onoffClientApp')
           model.amount * model.sku.unit_price
 
         model.compiledTitle = ->
-          parameters = model.getParameters()
-
-          if parameters.length > 0
-            values = parameters.selectedValues()
+          if model.parameters.length > 0
+            values = model.parameters.selectedValues()
 
             title = undefined
             for value in values
@@ -63,26 +69,10 @@ angular.module('onoffClientApp')
         model.compileTitle = (value, title = model.sku.title) ->
           title.replace(value.parameter.variable, value.code)
 
-        model.getParameters = _.memoize(
-          ->
-            sku_parameters = _.pluck(model.sku_parameters, 'parameter_id')
-
-            parameters = _.filter(
-              model.device_series.parameters
-              (parameter) ->
-                _.contains(sku_parameters, parameter.id)
-            )
-
-            Restangular.restangularizeCollection(model.device_series, parameters, 'parameters')
-            parameters.restangularizeNested(model.device_series)
-
-            parameters
-          ->
-            model.id
-        )
-
         model.restangularizeNested = (options) ->
           Restangular.restangularizeElement(null, model.sku, 'skus')
+          Restangular.restangularizeCollection(model, model.parameters, 'parameters')
+          model.parameters.restangularizeNested(model)
 
           model[key] = value for key, value of options
 

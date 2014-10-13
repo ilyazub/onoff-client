@@ -18,12 +18,8 @@ angular.module('onoffClientApp')
         collection.selectDefaultValues = ->
           model.selectDefaultValue() for model in collection
 
-        collection.restangularizeNested = (deviceSeries) ->
-          deviceSeriesCopy = deviceSeries.clone()
-          delete deviceSeriesCopy.parameters
-
+        collection.restangularizeNested = (deviceSeriesSku) ->
           options =
-            device_series: deviceSeriesCopy
             collection: collection
 
           model.restangularizeNested(options) for model in collection
@@ -34,6 +30,12 @@ angular.module('onoffClientApp')
       )
 
       Restangular.extendModel('parameters', (model) ->
+        model.toJSON = ->
+          clone = model.clone()
+          delete model.collection
+
+          clone
+
         model.selectDefaultValue = ->
           model.values.selectDefault()
 

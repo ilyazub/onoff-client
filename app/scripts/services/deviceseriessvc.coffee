@@ -13,13 +13,6 @@ angular.module('onoffClientApp')
     (Restangular) ->
       Restangular.extendCollection('device_series', (collection) ->
         collection.restangularizeNested = (device) ->
-          deviceClone = device.clone()
-          delete deviceClone.device_series
-
-          options =
-            device: deviceClone
-            collection: collection
-
           model.restangularizeNested() for model in collection
 
           collection
