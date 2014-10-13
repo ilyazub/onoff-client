@@ -13,18 +13,20 @@ angular.module('onoffClientApp')
     (Restangular) ->
       Restangular.extendCollection('device_series_skus', (collection) ->
         collection.price = (amount = 1) ->
-          prices = _.reduce(
+          itemPriceFn = if collection.hasParameters() then 'compiledPrice' else 'price'
+
+          price = _.reduce(
             collection
             (price, item) ->
-              price + item.price()
+              price + item[itemPriceFn]()
             0
           )
 
-          price = amount * prices
+          amount * price
 
         collection.hasParameters = ->
           for model in collection
-            if model.parameters.length > 0
+            if model.hasParameters()
               return true
 
           return false
@@ -44,16 +46,6 @@ angular.module('onoffClientApp')
       )
 
       Restangular.extendModel('device_series_skus', (model) ->
-        model.toJSON = ->
-          clone = model.clone()
-          delete clone.device_series
-          delete clone.parameters
-
-          clone
-
-        model.price = ->
-          model.amount * model.sku.unit_price
-
         model.compiledTitle = ->
           if model.parameters.length > 0
             values = model.parameters.selectedValues()
@@ -68,6 +60,22 @@ angular.module('onoffClientApp')
 
         model.compileTitle = (value, title = model.sku.title) ->
           title.replace(value.parameter.variable, value.code)
+
+        model.price = ->
+          model.amount * model.sku.unit_price
+
+        model.compiledPrice = ->
+          model.amount * model.parameters.selectedValuesPrice()
+
+        model.hasParameters = ->
+          model.parameters.length > 0
+
+        model.toJSON = ->
+          clone = model.clone()
+          delete clone.device_series
+          delete clone.parameters
+
+          clone
 
         model.restangularizeNested = (options) ->
           Restangular.restangularizeElement(null, model.sku, 'skus')

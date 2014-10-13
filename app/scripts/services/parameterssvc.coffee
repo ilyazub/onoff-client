@@ -18,6 +18,14 @@ angular.module('onoffClientApp')
         collection.selectDefaultValues = ->
           model.selectDefaultValue() for model in collection
 
+        collection.selectedValuesPrice = ->
+          _.reduce(
+            collection.selectedValues()
+            (price, value) ->
+              price + value.unit_price
+            0
+          )
+
         collection.restangularizeNested = (deviceSeriesSku) ->
           options =
             collection: collection
