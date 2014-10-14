@@ -1,14 +1,12 @@
-<article class="series" ng-show="cart.cart_items.length">
-  <header class="row">
-    <h4 class="small-12 columns">Серии</h3>
-  </header>
+<header class="row">
+  <h4 class="small-12 columns">Серии</h3>
+</header>
 
-  <ul class="row list">
-    <li class="small-12 columns item" ng-repeat="cartItem in cart.cart_items">
-      <h5 class="row collapse title">{{cartItem.device.title}}</h5>
-      <hr>
+<ul class="row list">
+  <li class="small-12 columns item" ng-repeat="cartItem in cart.cart_items">
+    <h5 class="row collapse title">{{cartItem.device.title}}</h5>
+    <hr>
 
-      <ul class="row device-series" device-series></ul>
-    </li>
-  </ul>
-</article>
+    <ul class="row device-series" device-series></ul>
+  </li>
+</ul>

@@ -38,6 +38,12 @@ angular.module('onoffClientApp')
       )
 
       Restangular.extendModel('cart_items', (model) ->
+        model.toJSON = ->
+          clone = model.plain()
+          delete clone.selected_values
+
+          clone
+
         model.restangularizeNested = ->
           Restangular.restangularizeElement(null, model.device, 'devices')
           model.device.restangularizeNested()
@@ -45,14 +51,6 @@ angular.module('onoffClientApp')
           model
 
         model
-      )
-
-      Restangular.addResponseInterceptor(
-        (data, operation, what, url, response, deferred) ->
-          if what is 'cart_items' and operation in [ 'put', 'remove' ] and typeof data is "string"
-            {}
-          else
-            data
       )
 
       service = Restangular.service('cart_items')

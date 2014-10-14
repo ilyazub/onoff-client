@@ -5,10 +5,14 @@
 
       .device-series {
         > .item {
-          min-height: 18em;
+          margin-bottom: 2em;
+
+          border-bottom: 1px solid #839496;
 
           .device-series-image {
             position: relative;
+
+            min-height: 10em;
 
             .layer {
               position: absolute;
@@ -21,8 +25,12 @@
             }
           }
 
-          .parameters {
-            .title {}
+          .sku-parameters {
+            .title {
+              margin-bottom: 0.5em;
+
+              font-weight: 500;
+            }
 
             .list {
               .item {
@@ -31,7 +39,8 @@
                 .parameters {
                   .list {
                     .item {
-                      padding: 0 0.25em 1em 0;
+                      padding-left: 0.25em;
+                      margin-bottom: 1em;
 
                       cursor: pointer;
 
@@ -42,6 +51,10 @@
 
                         height: 3.5em;
                         width: 3.5em;
+                      }
+
+                      .unit-price {
+                        font-size: 0.75em;
                       }
 
                       &:hover,

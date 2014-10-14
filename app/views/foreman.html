@@ -1,5 +1,6 @@
 <section class="foreman">
   <article devices></article>
-  <article cart-items></article>
-  <article series></article>
+  <article class="cart-items" cart-items></article>
+  <article class="series" ng-show="cart.cart_items.length" series></article>
+  <article class="selected-skus" ng-show="cart.cart_items.length > 0" selected-skus></article>
 </section>

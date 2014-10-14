@@ -1,0 +1,19 @@
+<header class="row">
+  <h4 class="small-12 columns title">Артикулы</h4>
+</header>
+
+<section class="row">
+  <ul class="small-3 columns left" ng-repeat="cartItem in cart.cart_items">
+    <li class="row">
+      <h5 class="small-12 columns">{{cartItem.device.title}}</h5>
+
+      <ul class="small-12 columns">
+        <li class="row collapse" ng-repeat="deviceSeries in cartItem.device.device_series">
+          <ul>
+            <li ng-repeat="deviceSeriesSku in deviceSeries.device_series_skus">{{deviceSeriesSku.compiledTitle()}} &mdash; {{deviceSeriesSku.amount * cartItem.amount}} шт</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</section>

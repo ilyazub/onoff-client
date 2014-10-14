@@ -15,9 +15,6 @@ angular.module('onoffClientApp')
         collection.selectedValues = ->
           _.flatten(model.selectedValue() for model in collection)
 
-        collection.selectDefaultValues = ->
-          model.selectDefaultValue() for model in collection
-
         collection.selectedValuesPrice = ->
           _.reduce(
             collection.selectedValues()
@@ -28,7 +25,7 @@ angular.module('onoffClientApp')
 
         collection.restangularizeNested = (deviceSeriesSku) ->
           options =
-            collection: collection
+            deviceSeriesSku: deviceSeriesSku
 
           model.restangularizeNested(options) for model in collection
 
@@ -38,15 +35,6 @@ angular.module('onoffClientApp')
       )
 
       Restangular.extendModel('parameters', (model) ->
-        model.toJSON = ->
-          clone = model.clone()
-          delete model.collection
-
-          clone
-
-        model.selectDefaultValue = ->
-          model.values.selectDefault()
-
         model.selectedValue = ->
           model.values.getSelected()
 
