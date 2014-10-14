@@ -2,26 +2,21 @@
 
 ###*
  # @ngdoc service
- # @name onoffClientApp.ParameterValuesSvc
+ # @name onoffClientApp.ValuesSvc
  # @description
- # # ParameterValuesSvc
+ # # ValuesSvc
  # Service in the onoffClientApp.
 ###
 angular.module('onoffClientApp')
-  .service 'ParameterValuesSvc', [
+  .service 'ValuesSvc', [
     'Restangular'
     (Restangular) ->
       Restangular.extendCollection('values', (collection) ->
         collection.unselect = ->
           model.unselect() for model in collection
 
-        collection.selectDefault = ->
-          if collection.length
-            model = _.sample(collection)
-            model.select()
-
         collection.getSelected = ->
-          _.filter(collection, 'selected')
+          _.filter(collection, 'selected_by_default')
 
         collection.restangularizeNested = (parameter) ->
           parameterCopy = parameter.clone()
@@ -32,8 +27,6 @@ angular.module('onoffClientApp')
             collection: collection
 
           model.restangularizeNested(options) for model in collection
-
-          collection.selectDefault()
 
           collection
 
@@ -48,11 +41,11 @@ angular.module('onoffClientApp')
           clone
 
         model.select = ->
-          unless model.selected is true
+          unless model.selected_by_default is true
             model.collection.unselect()
-            model.selected = true
+            model.selected_by_default = true
 
-        model.unselect = -> model.selected = false
+        model.unselect = -> model.selected_by_default = false
 
         model.restangularizeNested = (options = {}) ->
           model[key] = value for key, value of options

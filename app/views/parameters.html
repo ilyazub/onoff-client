@@ -6,7 +6,7 @@
   <li class="small-12 columns item" ng-repeat="deviceSeriesSku in deviceSeries.device_series_skus | orderBy: 'layer'" class="item">
     <ul class="parameters">
       <li class="row collapse list" ng-repeat="parameter in deviceSeriesSku.parameters">
-        <div ng-repeat="value in parameter.values" class="small-1 columns item left" ng-class="{ selected: value.selected }" ng-click="value.select()">
+        <div ng-repeat="value in parameter.values" class="small-1 columns item left" ng-class="{ selected: value.selected_by_default }" ng-click="value.select()">
           <img ng-src="/images/skus/{{deviceSeriesSku.compileTitle(value)}}_thumb.png" alt="{{value.code}}" title="{{value.code}} - {{value.description}}" width="100%" height="100%" class="image">
         </div>
       </li>
