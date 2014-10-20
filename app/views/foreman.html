@@ -1,6 +1,76 @@
 <section class="foreman">
   <article devices></article>
   <article class="cart-items" cart-items></article>
+
+  <ul>
+    <li ng-repeat="series in seriesList.models" class="row">
+      <div class="collapsed" ng-hide="series.expanded">
+        <div class="row">
+          <h3 class="small-12 columns">{{series.title}}</h3>
+        </div>
+
+        <div class="row">
+          <div class="small-2 columns">
+            <img ng-src="/images/series/{{series.title}}.png" alt="{{series.title}}" width="100%" height="100%">
+          </div>
+
+          <strong class="small-4 small-push-2 columns">от {{series.price() | currency:''}} грн</strong>
+
+          <ul class="small-3 columns">
+            <li>Производитель: {{series.manufacturer.title}}</li>
+            <li>Страна: {{series.manufacturer.country}}</li>
+            <li>Сборка: {{series.manufacturer.assembly}}</li>
+          </ul>
+        </div>
+
+        <div class="row collapse">
+          <input type="button" value="Выбрать цвет" class="small-12 columns small button" ng-click="series.expanded = true">
+        </div>
+      </div>
+
+      <div class="expanded" ng-show="series.expanded">
+        <div class="row">
+          <h3 class="small-3 columns">{{series.title}}</h3>
+        </div>
+
+        <div class="row">
+          <div class="small-3 columns">
+            <img ng-src="/images/series/{{series.title}}.png" alt="{{series.title}}" width="100%" height="100%">
+          </div>
+
+          <ul class="small-8 columns">
+            <li ng-repeat="deviceGroup in series.deviceGroups.models">
+              <ul>
+                <li ng-repeat="parameter in deviceGroup.parameters.models">
+                  <ul class="row">
+                    <li ng-repeat="value in parameter.values.models" class="small-1 columns left" ng-class="{ selected: value.selected }" ng-click="value.select()">
+                      <img ng-src="/images/series/{{series.title}}/device_groups/{{deviceGroup.title}}/{{value.code}}.png" alt="{{deviceGroup.title}}: {{series.title}} &mdash; {{value.code}}" width="100%" height="100%">
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+
+          </ul>
+        </div>
+
+        <div class="row">
+          <div class="small-2 columns right">
+            <div class="row"><strong class="small-12 columns">{{series.price() | currency:''}} грн</strong></div>
+
+            <form name="downloadArticles" class="row collapse" ng-submit="series.downloadSkus()">
+              <button class="button success small-12 columns">Выгрузить артикулы</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="row collapse">
+          <input type="button" value="Свернуть" class="small-12 columns small button" ng-click="series.expanded = false">
+        </div>
+      </div>
+    </li>
+  </ul>
+
   <article class="series" ng-show="cart.cart_items.length" series></article>
   <article class="selected-skus" ng-show="cart.cart_items.length > 0" selected-skus></article>
 </section>
