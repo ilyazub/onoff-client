@@ -11,6 +11,7 @@ angular
   .module('onoffClientApp')
   .controller 'ForemanCtrl', [
     '$scope'
+    '$http'
     'Restangular'
     'CartsModel'
     'DevicesSvc'
@@ -20,10 +21,11 @@ angular
     'DeviceSeriesSKUsSvc'
     'ParametersSvc'
     'ValuesSvc'
-    ($scope, Restangular, Carts, Devices, CartItems, DeviceSeries, SKUs, DeviceSeriesSKUs, Parameters, Values) ->
+    ($scope, $http, Restangular, Carts, Devices, CartItems, DeviceSeries, SKUs, DeviceSeriesSKUs, Parameters, Values) ->
       initializeCart = (cart) ->
         $scope.cart = cart
-        $scope.cartItems = new CartItems(service: cart.cart_items)
+        $scope.cartItems = new CartItems(service: $scope.cart.cart_items)
+        $scope.seriesList = new OnOff.Collections.Series(seriesList, cart: $scope.cart)
 
       initializeDevices = (devices) ->
         $scope.devices = devices
@@ -44,20 +46,26 @@ angular
         initialize: ->
 
         defineAttributes: ->
-          for key, value of @attributes
-            self = this
+          @attributes = _.merge(@attributes, @defaultAttributes)
 
-            do (key) ->
-              Object.defineProperty(
-                self
-                key
-                enumerable: true
-                configurable: true
-                get: ->
-                  self.attributes[key]
-                set: (value) ->
-                  self.attributes[key] = value
-              )
+          this.defineProperty(key, value) for key, value of @attributes
+
+        defineProperty: (key, value) ->
+          self = this
+
+          self.attributes[key] = value
+
+          do (key) ->
+            Object.defineProperty(
+              self
+              key
+              enumerable: true
+              configurable: true
+              get: ->
+                self.attributes[key]
+              set: (value) ->
+                self.attributes[key] = value
+            )
 
         toJSON: ->
           angular.copy @attributes
@@ -72,7 +80,7 @@ angular
 
         constructor: (models = [], options = {}) ->
           @model = options.model if options.model
-          this.reset(models, options) if models.length
+          this.reset(models, options)
           this.initialize(models, options)
 
         initialize: ->
@@ -94,6 +102,9 @@ angular
             this
           )
 
+        size: ->
+          @models.length
+
         toJSON: ->
           model.toJSON() for model in @models
 
@@ -104,13 +115,10 @@ angular
 
       class OnOff.Models.Series extends OnOff.Models.Base
         initialize: ->
-          @deviceGroups = new OnOff.Collections.DeviceGroups(@deviceGroups, series: this)
+          @deviceGroups = new OnOff.Collections.DeviceGroups(@deviceGroups, series: this, cart: @options.cart)
 
         price: ->
           @deviceGroups.price()
-
-        downloadSkus: ->
-          console.log angular.toJson(this)
 
         toJSON: ->
           attrs = super
@@ -125,7 +133,13 @@ angular
 
       class OnOff.Models.DeviceGroup extends OnOff.Models.Base
         initialize: ->
-          @parameters = new OnOff.Collections.Parameters(@parameters, deviceGroup: this)
+          @parameters = new OnOff.Collections.Parameters(
+            @parameters
+            deviceGroup: this
+            series: @options.series
+            cart: @options.cart
+          )
+
           @skus = new OnOff.Collections.SKU(@skus, deviceGroup: this)
 
         price: ->
@@ -150,7 +164,13 @@ angular
 
       class OnOff.Models.Parameter extends OnOff.Models.Base
         initialize: ->
-          @values = new OnOff.Collections.Values(this.values, parameter: this)
+          @values = new OnOff.Collections.Values(
+            this.values
+            parameter: this
+            series: @options.series
+            deviceGroup: @options.deviceGroup
+            cart: @options.cart
+          )
 
         selectedValue: ->
           @values.selectedValue()
@@ -175,6 +195,8 @@ angular
             @collection.unselect()
             @selected = true
 
+            $http.put("http://localhost:9292/carts/#{@options.cart.id}/series/#{@options.series.id}/device_groups/#{@options.deviceGroup.id}/values/#{@id}", angular.toJson(this))
+
         unselect: ->
           @selected = false
 
@@ -183,6 +205,8 @@ angular
 
           delete attrs.code
           delete attrs.description
+
+          attrs.parameter_id = @options.parameter.id
 
           attrs
 
@@ -199,13 +223,34 @@ angular
           model.unselect() for model in @models
 
       class OnOff.Models.SKU extends OnOff.Models.Base
+        defaultAttributes:
+          compiledTitle: ''
+
         initialize: ->
           @skuParameters = new OnOff.Collections.SkuParameters(this.parameters, sku: this)
 
         price: (parameters) ->
           price = if @unitPrice then @unitPrice else @skuParameters.price(parameters)
 
-          price * this.amount
+          price * @amount
+
+        compileTitle: ->
+          @attributes.compiledTitle = @compiledTitle = @title
+
+          if @skuParameters.size()
+            for skuParameter in @skuParameters.models
+              for parameter in @options.deviceGroup.parameters.models
+                if skuParameter.parameterId is parameter.id
+                  @compiledTitle = @compiledTitle.replace(parameter.variable, parameter.selectedValue().code)
+
+          @attributes.compiledTitle = @compiledTitle
+
+          this
+
+        toJSON: ->
+          this.compileTitle()
+
+          super
 
       class OnOff.Collections.SKU extends OnOff.Collections.Base
         model: OnOff.Models.SKU
@@ -233,7 +278,7 @@ angular
           )
 
         getValuePrice: (valueId) ->
-          if value = @skuValues.get(valueId) then value.unitPrice else 0
+          @skuValues.get(valueId).unitPrice
 
       class OnOff.Collections.SkuParameters extends OnOff.Collections.Base
         model: OnOff.Models.SkuParameter
@@ -256,6 +301,7 @@ angular
 
       seriesList = [
         {
+          id: 1
           title: 'Axcent'
           manufacturer:
             title: 'ABB'
@@ -395,6 +441,7 @@ angular
           ]
         }
         {
+          id: 2
           title: 'Basic 55'
           manufacturer:
             title: 'ABB'
@@ -519,6 +566,4 @@ angular
           ]
         }
       ]
-
-      $scope.seriesList = new OnOff.Collections.Series(seriesList)
   ]

@@ -58,9 +58,9 @@
           <div class="small-2 columns right">
             <div class="row"><strong class="small-12 columns">{{series.price() | currency:''}} грн</strong></div>
 
-            <form name="downloadArticles" class="row collapse" ng-submit="series.downloadSkus()">
-              <button class="button success small-12 columns">Выгрузить артикулы</button>
-            </form>
+            <div class="row collapse">
+              <a ng-href="http://localhost:9292/carts/{{cart.id}}/series/{{series.id}}/skus.xls" class="button success small-12 columns" target="_blank">Выгрузить артикулы</a>
+            </div>
           </div>
         </div>
 
