@@ -39,15 +39,13 @@ angular
 
       class OnOff.Models.Base
         constructor: (@attributes = {}, @options = {}) ->
-          this.defineAttributes()
+          this.defineProperties()
           @collection = @options.collection if @options.collection
           this.initialize(@attributes, @options)
 
         initialize: ->
 
-        defineAttributes: ->
-          @attributes = _.merge(@attributes, @defaultAttributes)
-
+        defineProperties: ->
           this.defineProperty(key, value) for key, value of @attributes
 
         defineProperty: (key, value) ->
@@ -223,9 +221,6 @@ angular
           model.unselect() for model in @models
 
       class OnOff.Models.SKU extends OnOff.Models.Base
-        defaultAttributes:
-          compiledTitle: ''
-
         initialize: ->
           @skuParameters = new OnOff.Collections.SkuParameters(this.parameters, sku: this)
 
@@ -233,24 +228,6 @@ angular
           price = if @unitPrice then @unitPrice else @skuParameters.price(parameters)
 
           price * @amount
-
-        compileTitle: ->
-          @attributes.compiledTitle = @compiledTitle = @title
-
-          if @skuParameters.size()
-            for skuParameter in @skuParameters.models
-              for parameter in @options.deviceGroup.parameters.models
-                if skuParameter.parameterId is parameter.id
-                  @compiledTitle = @compiledTitle.replace(parameter.variable, parameter.selectedValue().code)
-
-          @attributes.compiledTitle = @compiledTitle
-
-          this
-
-        toJSON: ->
-          this.compileTitle()
-
-          super
 
       class OnOff.Collections.SKU extends OnOff.Collections.Base
         model: OnOff.Models.SKU
