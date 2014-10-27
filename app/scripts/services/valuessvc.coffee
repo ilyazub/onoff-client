@@ -16,7 +16,7 @@ angular.module('onoffClientApp')
           model.unselect() for model in collection
 
         collection.getSelected = ->
-          _.filter(collection, 'selected_by_default')
+          _.filter(collection, 'selected')
 
         collection.restangularizeNested = (parameter) ->
           parameterCopy = parameter.clone()
@@ -41,11 +41,11 @@ angular.module('onoffClientApp')
           clone
 
         model.select = ->
-          unless model.selected_by_default is true
+          unless model.selected is true
             model.collection.unselect()
-            model.selected_by_default = true
+            model.selected = true
 
-        model.unselect = -> model.selected_by_default = false
+        model.unselect = -> model.selected = false
 
         model.restangularizeNested = (options = {}) ->
           model[key] = value for key, value of options

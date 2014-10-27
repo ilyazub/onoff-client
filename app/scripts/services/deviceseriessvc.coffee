@@ -22,8 +22,8 @@ angular.module('onoffClientApp')
 
       Restangular.extendModel('device_series', (model) ->
         model.restangularizeNested = (options = {}) ->
-          Restangular.restangularizeCollection(model, model.device_series_skus, 'device_series_skus')
-          model.device_series_skus.restangularizeNested(model)
+          Restangular.restangularizeCollection(model, model.deviceSeriesSkus, 'device_series_skus')
+          model.deviceSeriesSkus.restangularizeNested(model)
 
           model[key] = value for key, value in options
 

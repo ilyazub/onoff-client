@@ -22,16 +22,16 @@ angular
     'ParametersSvc'
     'ValuesSvc'
     ($scope, $http, Restangular, Carts, Devices, CartItems, DeviceSeries, SKUs, DeviceSeriesSKUs, Parameters, Values) ->
-      initializeCart = (cart) ->
-        $scope.cart = cart
-        $scope.cartItems = new CartItems(service: $scope.cart.cart_items)
-        $scope.seriesList = new OnOff.Collections.Series(seriesList, cart: $scope.cart)
-
       initializeDevices = (devices) ->
         $scope.devices = devices
 
-      Carts.initialize(initializeCart)
+      initializeCart = (cart) ->
+        $scope.cart = cart
+        $scope.cartItems = new CartItems(service: $scope.cart.cartItems)
+        $scope.seriesList = new OnOff.Collections.Series(seriesList, cart: $scope.cart)
+
       Devices.getList().then(initializeDevices)
+      Carts.initialize(initializeCart)
 
       OnOff =
         Models: {}

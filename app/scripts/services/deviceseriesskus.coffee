@@ -33,7 +33,7 @@ angular.module('onoffClientApp')
 
         collection.restangularizeNested = (deviceSeries) ->
           deviceSeriesClone = deviceSeries.clone()
-          delete deviceSeriesClone.device_series_skus
+          delete deviceSeriesClone.deviceSeriesSkus
 
           options =
             device_series: deviceSeriesClone

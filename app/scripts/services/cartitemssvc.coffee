@@ -40,7 +40,7 @@ angular.module('onoffClientApp')
       Restangular.extendModel('cart_items', (model) ->
         model.toJSON = ->
           clone = model.plain()
-          delete clone.selected_values
+          delete clone.device
 
           clone
 
