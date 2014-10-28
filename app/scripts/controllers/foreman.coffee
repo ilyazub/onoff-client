@@ -29,7 +29,7 @@ angular
       initializeCart = (cart) ->
         $scope.cart = cart
         $scope.cartItems = new CartItems(service: $scope.cart.cartItems)
-        # $scope.newCart = new OnOff.Models.Cart(cart.plain())
+        $scope.newCart = new OnOff.Models.Cart(id: cart.id)
 
       Devices.getList().then(initializeDevices)
       Carts.initialize(initializeCart)
@@ -114,42 +114,28 @@ angular
 
       class OnOff.Models.Cart extends OnOff.Models.Base
         initialize: ->
-          @cartItems = new OnOff.Collections.CartItems(@cartItems, cart: this)
+          @expanded = true
 
-      class OnOff.Models.CartItem extends OnOff.Models.Base
-        initialize: ->
-          @device = new OnOff.Models.Device(@device, cartItem: this)
-
-      class OnOff.Collections.CartItems extends OnOff.Collections.Base
-        model: OnOff.Models.CartItem
-
-        series: ->
-          _.flatten(model.device.series for model in @models)
-
-      class OnOff.Models.Device extends OnOff.Models.Base
-        initialize: ->
-          $http.get("http://localhost:9292/devices/#{@id}/device_series")
+        loadSeries: ->
+          $http.get("http://localhost:9292/carts/#{@id}/series")
           .then(
-            (deviceSeries) =>
-              # @deviceSeries = new OnOff.Collections.DeviceSeries(deviceSeries.data, device: this)
-              @series = _.flatten(deviceSeries.data, 'series')
-              @deviceSeriesSkus = _.flatten(deviceSeries.data, 'deviceSeriesSkus')
+            (response) =>
+              @series = new OnOff.Collections.Series(response.data, cart: this)
+              @expanded = false
           )
-
-      class OnOff.Collections.Devices extends OnOff.Collections.Base
-        model: OnOff.Models.Device
-
-      class OnOff.Models.DeviceSeries extends OnOff.Models.Base
-
-      class OnOff.Collections.DeviceSeries extends OnOff.Collections.Base
-        model: OnOff.Models.DeviceSeries
 
       class OnOff.Models.Series extends OnOff.Models.Base
         initialize: ->
-          @deviceGroups = new OnOff.Collections.DeviceGroups(@deviceGroups, series: this, cart: @options.cart)
+          @parameters = new OnOff.Collections.Parameters(
+            @parameters
+            series: this
+            cart: @options.cart
+          )
+
+          @skus = new OnOff.Collections.SKU(@skus, series: this)
 
         price: ->
-          @deviceGroups.price()
+          @skus.price(@parameters)
 
         toJSON: ->
           attrs = super
@@ -162,44 +148,12 @@ angular
       class OnOff.Collections.Series extends OnOff.Collections.Base
         model: OnOff.Models.Series
 
-      class OnOff.Models.DeviceGroup extends OnOff.Models.Base
-        initialize: ->
-          @parameters = new OnOff.Collections.Parameters(
-            @parameters
-            deviceGroup: this
-            series: @options.series
-            cart: @options.cart
-          )
-
-          @skus = new OnOff.Collections.SKU(@skus, deviceGroup: this)
-
-        price: ->
-          @skus.price(@parameters)
-
-        toJSON: ->
-          attrs = super
-
-          delete attrs.title
-
-          attrs
-
-      class OnOff.Collections.DeviceGroups extends OnOff.Collections.Base
-        model: OnOff.Models.DeviceGroup
-
-        price: ->
-          this.reduce(
-            (price, model) ->
-              price + model.price()
-            0
-          )
-
       class OnOff.Models.Parameter extends OnOff.Models.Base
         initialize: ->
           @values = new OnOff.Collections.Values(
-            this.values
+            @values
             parameter: this
             series: @options.series
-            deviceGroup: @options.deviceGroup
             cart: @options.cart
           )
 
@@ -226,7 +180,7 @@ angular
             @collection.unselect()
             @selected = true
 
-            $http.put("http://localhost:9292/carts/#{@options.cart.id}/series/#{@options.series.id}/device_groups/#{@options.deviceGroup.id}/values/#{@id}", angular.toJson(this))
+            $http.put("http://localhost:9292/carts/#{@options.cart.id}/series/#{@options.series.id}/values/#{@id}", angular.toJson(this))
 
         unselect: ->
           @selected = false

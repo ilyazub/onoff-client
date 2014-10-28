@@ -1,9 +1,19 @@
 <section class="foreman">
-  <article devices></article>
-  <article class="cart-items" cart-items></article>
+  <header class="cart">
+    <section ng-show="newCart.expanded">
+      <article devices></article>
+      <article class="cart-items" cart-items></article>
+
+      <a ng-click="newCart.loadSeries()" class="button right">Загрузить серии</a>
+    </section>
+
+    <section ng-hide="newCart.expanded">
+      <a ng-click="newCart.expanded = false" class="button right">Посмотреть корзину</a>
+    </section>
+  </header>
 
   <ul>
-    <li ng-repeat="series in cart.cartItems.series()" class="row">
+    <li ng-repeat="series in newCart.series.models" class="row">
       <div class="collapsed" ng-hide="series.expanded">
         <div class="row">
           <h3 class="small-12 columns">{{series.title}}</h3>
@@ -39,18 +49,13 @@
           </div>
 
           <ul class="small-8 columns">
-            <li ng-repeat="deviceGroup in series.deviceGroups.models">
-              <ul>
-                <li ng-repeat="parameter in deviceGroup.parameters.models">
-                  <ul class="row">
-                    <li ng-repeat="value in parameter.values.models" class="small-1 columns left" ng-class="{ selected: value.selected }" ng-click="value.select()">
-                      <img ng-src="/images/series/{{series.title}}/device_groups/{{deviceGroup.title}}/{{value.code}}.png" alt="{{deviceGroup.title}}: {{series.title}} &mdash; {{value.code}}" width="100%" height="100%">
-                    </li>
-                  </ul>
+            <li ng-repeat="parameter in series.parameters.models">
+              <ul class="row">
+                <li ng-repeat="value in parameter.values.models" class="small-1 columns left" ng-class="{ selected: value.selected }" ng-click="value.select()">
+                  <img ng-src="/images/series/{{series.title}}/values/{{value.code}}.png" alt="{{series.title}} &mdash; {{value.code}}" width="100%" height="100%">
                 </li>
               </ul>
             </li>
-
           </ul>
         </div>
 
