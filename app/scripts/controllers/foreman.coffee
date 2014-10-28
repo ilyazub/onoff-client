@@ -175,15 +175,21 @@ angular
         model: OnOff.Models.Parameter
 
       class OnOff.Models.Value extends OnOff.Models.Base
+        initialize: ->
+          this.update() if @selected
+
         select: ->
           unless @selected
             @collection.unselect()
             @selected = true
-
-            $http.put("http://localhost:9292/carts/#{@options.cart.id}/series/#{@options.series.id}/values/#{@id}", angular.toJson(this))
+            this.update()
 
         unselect: ->
           @selected = false
+
+        update: ->
+          $http.put("http://localhost:9292/carts/#{@options.cart.id}/values", angular.toJson(this))
+
 
         toJSON: ->
           attrs = super
