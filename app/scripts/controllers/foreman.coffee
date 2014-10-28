@@ -16,19 +16,20 @@ angular
     'CartsModel'
     'DevicesSvc'
     'CartItemsModel'
+    'SeriesSvc'
     'DeviceSeriesSvc'
     'SKUsSvc'
     'DeviceSeriesSKUsSvc'
     'ParametersSvc'
     'ValuesSvc'
-    ($scope, $http, Restangular, Carts, Devices, CartItems, DeviceSeries, SKUs, DeviceSeriesSKUs, Parameters, Values) ->
+    ($scope, $http, Restangular, Carts, Devices, CartItems, Series, DeviceSeries, SKUs, DeviceSeriesSKUs, Parameters, Values) ->
       initializeDevices = (devices) ->
         $scope.devices = devices
 
       initializeCart = (cart) ->
         $scope.cart = cart
         $scope.cartItems = new CartItems(service: $scope.cart.cartItems)
-        $scope.seriesList = new OnOff.Collections.Series(seriesList, cart: $scope.cart)
+        # $scope.newCart = new OnOff.Models.Cart(cart.plain())
 
       Devices.getList().then(initializeDevices)
       Carts.initialize(initializeCart)
@@ -110,6 +111,38 @@ angular
         OnOff.Collections.Base::[method] = (args...) ->
           args.unshift(@models)
           return _[method].apply(_, args)
+
+      class OnOff.Models.Cart extends OnOff.Models.Base
+        initialize: ->
+          @cartItems = new OnOff.Collections.CartItems(@cartItems, cart: this)
+
+      class OnOff.Models.CartItem extends OnOff.Models.Base
+        initialize: ->
+          @device = new OnOff.Models.Device(@device, cartItem: this)
+
+      class OnOff.Collections.CartItems extends OnOff.Collections.Base
+        model: OnOff.Models.CartItem
+
+        series: ->
+          _.flatten(model.device.series for model in @models)
+
+      class OnOff.Models.Device extends OnOff.Models.Base
+        initialize: ->
+          $http.get("http://localhost:9292/devices/#{@id}/device_series")
+          .then(
+            (deviceSeries) =>
+              # @deviceSeries = new OnOff.Collections.DeviceSeries(deviceSeries.data, device: this)
+              @series = _.flatten(deviceSeries.data, 'series')
+              @deviceSeriesSkus = _.flatten(deviceSeries.data, 'deviceSeriesSkus')
+          )
+
+      class OnOff.Collections.Devices extends OnOff.Collections.Base
+        model: OnOff.Models.Device
+
+      class OnOff.Models.DeviceSeries extends OnOff.Models.Base
+
+      class OnOff.Collections.DeviceSeries extends OnOff.Collections.Base
+        model: OnOff.Models.DeviceSeries
 
       class OnOff.Models.Series extends OnOff.Models.Base
         initialize: ->

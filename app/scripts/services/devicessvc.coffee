@@ -14,16 +14,21 @@ angular.module('onoffClientApp')
       Restangular.extendModel('devices', (model) ->
         model.toJSON = ->
           clone = model.plain()
-          delete clone.device_series
+          delete clone.deviceSeries
 
           clone
 
-        model.restangularizeNested = ->
+        model.restangularizeNested = () ->
           model.getList('device_series').then(
-            (device_series) ->
-              model.device_series = device_series
-              Restangular.restangularizeCollection(model, model.device_series, 'device_series')
-              model.device_series.restangularizeNested(model)
+            (deviceSeries) ->
+              series = deviceSeries.map(
+                (deviceSerie) ->
+                  deviceSerie.series.deviceSeriesSkus = deviceSerie.deviceSeriesSkus
+
+                  deviceSerie.series
+              )
+
+              model.series = _.flatten(series)
           )
 
         model

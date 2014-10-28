@@ -3,7 +3,7 @@
   <article class="cart-items" cart-items></article>
 
   <ul>
-    <li ng-repeat="series in seriesList.models" class="row">
+    <li ng-repeat="series in cart.cartItems.series()" class="row">
       <div class="collapsed" ng-hide="series.expanded">
         <div class="row">
           <h3 class="small-12 columns">{{series.title}}</h3>
@@ -71,6 +71,6 @@
     </li>
   </ul>
 
-  <article class="series" ng-show="cart.cartItems.length" series></article>
-  <article class="selected-skus" ng-show="cart.cartItems.length" selected-skus></article>
+  <article class="series hide" ng-show="cart.cartItems.length" series></article>
+  <article class="selected-skus hide" ng-show="cart.cartItems.length" selected-skus></article>
 </section>

@@ -14,7 +14,7 @@ angular.module('onoffClientApp')
       Restangular.extendModel('carts', (model) ->
         model.restangularizeNested = ->
           Restangular.restangularizeCollection(model, model.cartItems, 'cart_items')
-          model.cartItems.restangularizeNested()
+          model.cartItems.restangularizeNested(model)
 
         model
       )

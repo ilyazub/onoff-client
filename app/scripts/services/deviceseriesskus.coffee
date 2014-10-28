@@ -62,7 +62,7 @@ angular.module('onoffClientApp')
           title.replace(value.parameter.variable, value.code)
 
         model.price = ->
-          model.amount * model.sku.unit_price
+          model.amount * model.sku.unitPrice
 
         model.compiledPrice = ->
           model.amount * model.parameters.selectedValuesPrice()

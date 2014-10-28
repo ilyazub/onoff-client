@@ -19,7 +19,7 @@ angular.module('onoffClientApp')
           _.reduce(
             collection.selectedValues()
             (price, value) ->
-              price + value.unit_price
+              price + value.unitPrice
             0
           )
 

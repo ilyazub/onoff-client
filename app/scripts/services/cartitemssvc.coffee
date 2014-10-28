@@ -29,8 +29,25 @@ angular.module('onoffClientApp')
 
           collection
 
-        collection.restangularizeNested = ->
-          model.restangularizeNested() for model in collection
+        collection.series = ->
+          result = []
+
+          for model in collection
+            series = model.series() or []
+
+            for serie in series
+              if existingSeries = _.find(result, id: serie.id)
+                existingSeries.deviceSeriesSkus.push(serie.deviceSeriesSkus...)
+              else
+                result.push(serie)
+
+          Restangular.restangularizeCollection(model.cart, result, 'series')
+          result.restangularizeNested()
+
+          result
+
+        collection.restangularizeNested = (cart) ->
+          model.restangularizeNested(cart: cart) for model in collection
 
           collection
 
@@ -38,15 +55,20 @@ angular.module('onoffClientApp')
       )
 
       Restangular.extendModel('cart_items', (model) ->
+        model.series = ->
+          model.device.series
+
         model.toJSON = ->
           clone = model.plain()
           delete clone.device
 
           clone
 
-        model.restangularizeNested = ->
+        model.restangularizeNested = (options = {}) ->
           Restangular.restangularizeElement(null, model.device, 'devices')
           model.device.restangularizeNested()
+
+          model[key] = value for key, value in options
 
           model
 
