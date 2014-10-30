@@ -121,7 +121,6 @@ angular
           .then(
             (response) =>
               @series = new OnOff.Collections.Series(response.data, cart: this)
-              @expanded = false
           )
 
       class OnOff.Models.Series extends OnOff.Models.Base

@@ -52,7 +52,7 @@
             <li ng-repeat="parameter in series.parameters.models">
               <ul class="row">
                 <li ng-repeat="value in parameter.values.models" class="small-1 columns left" ng-class="{ selected: value.selected }" ng-click="value.select()">
-                  <img ng-src="/images/series/{{series.title}}/values/{{value.code}}.png" alt="{{series.title}} &mdash; {{value.code}}" width="100%" height="100%">
+                  <img ng-src="/images/series/{{series.title}}/values/{{value.code}}.png" alt="{{series.title}} &mdash; {{value.code}} &dash; {{value.description}}" title="{{series.title}} &mdash; {{value.code}} &dash; {{value.description}}" width="100%" height="100%">
                 </li>
               </ul>
             </li>
