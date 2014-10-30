@@ -29,7 +29,7 @@ angular
       initializeCart = (cart) ->
         $scope.cart = cart
         $scope.cartItems = new CartItems(service: $scope.cart.cartItems)
-        $scope.newCart = new OnOff.Models.Cart(id: cart.id)
+        $scope.newCart = new OnOff.Models.Cart(id: cart.id, cartItems: $scope.cart.cartItems)
 
       Devices.getList().then(initializeDevices)
       Carts.initialize(initializeCart)
@@ -116,6 +116,8 @@ angular
         initialize: ->
           @expanded = true
 
+          @cartItems = new OnOff.Collections.CartItems(@cartItems, cart: this)
+
         loadSeries: ->
           $http.get("http://localhost:9292/carts/#{@id}/series")
           .then(
@@ -123,18 +125,42 @@ angular
               @series = new OnOff.Collections.Series(response.data, cart: this)
           )
 
+        amountOfDevices: (deviceId) ->
+          @cartItems.amountOfDevices(deviceId)
+
+      class OnOff.Models.CartItem extends OnOff.Models.Base
+        initialize: ->
+          @device = new OnOff.Models.Device(@device, cartItem: this)
+
+        amountOfDevices: (deviceId) ->
+          if @device.id is deviceId then @amount else 0
+
+      class OnOff.Collections.CartItems extends OnOff.Collections.Base
+        model: OnOff.Models.CartItem
+
+        amountOfDevices: (deviceId) ->
+          this.reduce(
+            (amount, cartItem) ->
+              amount + cartItem.amountOfDevices(deviceId)
+            0
+          )
+
+      class OnOff.Models.Device extends OnOff.Models.Base
+      class OnOff.Collections.Devices extends OnOff.Models.Base
+        model: OnOff.Models.Device
+
       class OnOff.Models.Series extends OnOff.Models.Base
         initialize: ->
           @parameters = new OnOff.Collections.Parameters(
             @parameters
             series: this
-            cart: @options.cart
+            cart:   @options.cart
           )
 
           @skus = new OnOff.Collections.SKU(@skus, series: this)
 
         price: ->
-          @skus.price(@parameters)
+          @skus.price(@parameters, @options.cart)
 
         toJSON: ->
           attrs = super
@@ -216,18 +242,18 @@ angular
         initialize: ->
           @skuParameters = new OnOff.Collections.SkuParameters(this.parameters, sku: this)
 
-        price: (parameters) ->
+        price: (parameters, cart) ->
           price = if @unitPrice then @unitPrice else @skuParameters.price(parameters)
 
-          price * @amount
+          price * @amount * cart.amountOfDevices(@deviceId)
 
       class OnOff.Collections.SKU extends OnOff.Collections.Base
         model: OnOff.Models.SKU
 
-        price: (parameters) ->
+        price: (parameters, cart) ->
           this.reduce(
             (price, model) ->
-              price + model.price(parameters)
+              price + model.price(parameters, cart)
             0
           )
 
