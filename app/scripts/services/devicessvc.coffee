@@ -18,18 +18,7 @@ angular.module('onoffClientApp')
 
           clone
 
-        model.restangularizeNested = () ->
-          model.getList('device_series').then(
-            (deviceSeries) ->
-              series = deviceSeries.map(
-                (deviceSerie) ->
-                  deviceSerie.series.deviceSeriesSkus = deviceSerie.deviceSeriesSkus
-
-                  deviceSerie.series
-              )
-
-              model.series = _.flatten(series)
-          )
+        model.restangularizeNested = ->
 
         model
       )

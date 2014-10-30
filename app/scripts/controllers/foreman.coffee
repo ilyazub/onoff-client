@@ -123,6 +123,7 @@ angular
           .then(
             (response) =>
               @series = new OnOff.Collections.Series(response.data, cart: this)
+              @expanded = false
           )
 
         amountOfDevices: (deviceId) ->

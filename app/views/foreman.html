@@ -4,11 +4,15 @@
       <article devices></article>
       <article class="cart-items" cart-items></article>
 
-      <a ng-click="newCart.loadSeries()" class="button right">Загрузить серии</a>
+      <div class="row" ng-show="cart.cartItems.length > 0">
+        <a ng-click="newCart.loadSeries()" class="medium button right small-12 columns right">Загрузить серии</a>
+      </div>
     </section>
 
     <section ng-hide="newCart.expanded">
-      <a ng-click="newCart.expanded = false" class="button right">Посмотреть корзину</a>
+      <div class="row">
+        <a ng-click="newCart.expanded = true" class="medium button right small-12 columns right">Посмотреть корзину</a>
+      </div>
     </section>
   </header>
 
@@ -34,7 +38,7 @@
         </div>
 
         <div class="row collapse">
-          <input type="button" value="Выбрать цвет" class="small-12 columns small button" ng-click="series.expanded = true">
+          <input type="button" value="Выбрать цвет" class="small-12 columns small button secondary" ng-click="series.expanded = true">
         </div>
       </div>
 
@@ -60,8 +64,8 @@
         </div>
 
         <div class="row">
-          <div class="small-2 columns right">
-            <div class="row"><strong class="small-12 columns">{{series.price() | currency:''}} грн</strong></div>
+          <div class="small-3 columns right">
+            <div class="row collapse"><strong class="small-12 columns text-right">{{series.price() | currency:''}} грн</strong></div>
 
             <div class="row collapse">
               <a ng-href="http://localhost:9292/carts/{{cart.id}}/series/{{series.id}}/{{series.title}}.xls" class="button success small-12 columns" target="_blank">Выгрузить артикулы</a>
@@ -70,7 +74,7 @@
         </div>
 
         <div class="row collapse">
-          <input type="button" value="Свернуть" class="small-12 columns small button" ng-click="series.expanded = false">
+          <input type="button" value="Свернуть" class="small-12 columns small button secondary" ng-click="series.expanded = false">
         </div>
       </div>
     </li>
