@@ -5,13 +5,13 @@
       <article class="cart-items" cart-items></article>
 
       <div class="row" ng-show="cart.cartItems.length > 0">
-        <a ng-click="newCart.loadSeries()" class="medium button right small-12 columns right">Загрузить серии</a>
+        <a ng-click="newCart.loadSeries()" class="medium button radius right small-12 columns right">Загрузить серии</a>
       </div>
     </section>
 
     <section ng-hide="newCart.expanded">
       <div class="row">
-        <a ng-click="newCart.expanded = true" class="medium button right small-12 columns right">Посмотреть корзину</a>
+        <a ng-click="newCart.expanded = true" class="medium button radius right small-12 columns right">Посмотреть корзину</a>
       </div>
     </section>
   </header>
@@ -68,7 +68,7 @@
             <div class="row collapse"><strong class="small-12 columns text-right">{{series.price() | currency:''}} грн</strong></div>
 
             <div class="row collapse">
-              <a ng-href="http://localhost:9292/carts/{{cart.id}}/series/{{series.id}}/{{series.title}}.xls" class="button success small-12 columns" target="_blank">Выгрузить артикулы</a>
+              <a ng-href="http://localhost:9292/carts/{{cart.id}}/series/{{series.id}}/{{series.title}}.xls" class="button radius success small-12 columns" target="_blank">Выгрузить артикулы</a>
             </div>
           </div>
         </div>
