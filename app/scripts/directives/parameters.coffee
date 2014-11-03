@@ -8,6 +8,6 @@
 ###
 angular.module('onoffClientApp')
   .directive('parameters', ->
-    templateUrl: '/views/parameters.html'
+    templateUrl: 'views/parameters.html'
     restrict: 'EA'
   )

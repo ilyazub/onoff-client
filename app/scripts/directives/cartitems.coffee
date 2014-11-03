@@ -8,7 +8,6 @@
 ###
 angular.module('onoffClientApp')
   .directive('cartItems', ->
-    templateUrl: '/views/cartitems.html'
+    templateUrl: 'views/cartitems.html'
     restrict: 'EA'
-    link: (scope, element, attrs) ->
   )

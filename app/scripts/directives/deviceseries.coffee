@@ -8,6 +8,6 @@
 ###
 angular.module('onoffClientApp')
   .directive('deviceSeries', ->
-    templateUrl: '/views/deviceseries.html'
+    templateUrl: 'views/deviceseries.html'
     restrict: 'EA'
   )
