@@ -8,4 +8,4 @@
  # Constant in the onoffClientApp.
 ###
 angular.module('onoffClientApp')
-  .constant 'apiUrl', 'http://localhost:9292'
+  .constant 'apiUrl', '/api'
