@@ -237,7 +237,7 @@ angular
           @skuParameters = new OnOff.Collections.SkuParameters(this.parameters, sku: this)
 
         price: (parameters, cart) ->
-          price = if @unitPrice then @unitPrice else @skuParameters.price(parameters)
+          price = if @unitPrice > 0 and @skuParameters.size() > 0 then @unitPrice else @skuParameters.price(parameters)
 
           price * @amount * cart.amountOfDevices(@deviceId)
 
