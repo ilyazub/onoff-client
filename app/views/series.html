@@ -50,7 +50,7 @@
           <div class="row collapse"><strong class="small-12 columns text-right">{{series.price() | currency:''}} грн</strong></div>
 
           <div class="row collapse">
-            <a ng-href="http://localhost:9292/carts/{{cart.id}}/series/{{series.id}}/{{series.title}}.xls" class="button radius success small-12 columns" target="_blank">Выгрузить артикулы</a>
+            <a ng-href="/api/carts/{{cart.id}}/series/{{series.id}}/{{series.title}}.xls" class="button radius success small-12 columns" target="_blank">Выгрузить артикулы</a>
           </div>
         </div>
       </div>
