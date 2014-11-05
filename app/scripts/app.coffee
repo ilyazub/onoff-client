@@ -10,11 +10,7 @@
 ###
 angular
   .module('onoffClientApp', [
-    'ngAnimate'
-    'ngCookies'
-    'ngResource'
     'ngRoute'
-    'ngSanitize'
     'ngTouch'
     'restangular'
     'ngStorage'
@@ -37,6 +33,5 @@ angular
       RestangularProvider.setBaseUrl(apiUrl)
       RestangularProvider.setDefaultHttpFields(
         cache: true
-        withCredentials: true
       )
   ]

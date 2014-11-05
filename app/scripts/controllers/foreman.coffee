@@ -16,13 +16,7 @@ angular
     'CartsModel'
     'DevicesSvc'
     'CartItemsModel'
-    'SeriesSvc'
-    'DeviceSeriesSvc'
-    'SKUsSvc'
-    'DeviceSeriesSKUsSvc'
-    'ParametersSvc'
-    'ValuesSvc'
-    ($scope, $http, Restangular, Carts, Devices, CartItems, Series, DeviceSeries, SKUs, DeviceSeriesSKUs, Parameters, Values) ->
+    ($scope, $http, Restangular, Carts, Devices, CartItems) ->
       initializeDevices = (devices) ->
         $scope.devices = devices
 
@@ -215,7 +209,6 @@ angular
 
         update: ->
           $http.put("/api/carts/#{@options.cart.id}/values", angular.toJson(this))
-
 
         toJSON: ->
           attrs = super
