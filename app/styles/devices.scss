@@ -19,18 +19,16 @@
 
     transition: 100ms linear background-color;
 
-    &:before {
+    .image {
       position: absolute;
 
-      content: "";
+      margin-left: -1px;
 
       width: $size_of_side;
       height: $size_of_side;
 
       top: 0.5em;
       left: 0.75em;
-
-      border: 1px solid #073642;
     }
 
     &:hover {

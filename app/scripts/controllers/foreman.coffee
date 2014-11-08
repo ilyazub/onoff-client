@@ -23,7 +23,10 @@ angular
       initializeCart = (cart) ->
         $scope.cart = cart
         $scope.cartItems = new CartItems(service: $scope.cart.cartItems)
-        $scope.newCart = new OnOff.Models.Cart(id: cart.id, cartItems: $scope.cart.cartItems)
+        $scope.newCart = new OnOff.Models.Cart(id: $scope.cart.id, cartItems: $scope.cart.cartItems)
+
+      $scope.cart = {}
+      $scope.devices = []
 
       Devices.getList().then(initializeDevices)
       Carts.initialize(initializeCart)

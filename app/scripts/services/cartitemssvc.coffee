@@ -29,23 +29,6 @@ angular.module('onoffClientApp')
 
           collection
 
-        collection.series = ->
-          result = []
-
-          for model in collection
-            series = model.series() or []
-
-            for serie in series
-              if existingSeries = _.find(result, id: serie.id)
-                existingSeries.deviceSeriesSkus.push(serie.deviceSeriesSkus...)
-              else
-                result.push(serie)
-
-          Restangular.restangularizeCollection(model.cart, result, 'series')
-          result.restangularizeNested()
-
-          result
-
         collection.restangularizeNested = (cart) ->
           model.restangularizeNested(cart: cart) for model in collection
 
