@@ -8,9 +8,7 @@
   $size_of_side: 2em;
 
   .item {
-    position: relative;
-
-    padding: 0.5em 0 0.5em 3.5em;
+    padding: 0.5em 0 0.5em 0.5em;
 
     line-height: $size_of_side;
     color: #073642;
@@ -20,20 +18,93 @@
     transition: 100ms linear background-color;
 
     .image {
-      position: absolute;
-
-      margin-left: -1px;
-
       width: $size_of_side;
       height: $size_of_side;
-
-      top: 0.5em;
-      left: 0.75em;
     }
 
     &:hover {
       color: #002b36;
       background-color: #839496;
+    }
+
+    &.item--socket1 {
+    }
+
+    &.item--socket2 {
+    }
+
+    &.item--socket3 {
+    }
+
+    &.item--socket4 {
+    }
+
+    &.item--socket5 {
+    }
+
+    &.item--socket6 {
+    }
+
+    &.item--socket7 {
+    }
+
+    &.item--switch1 {
+    }
+
+    &.item--switch2 {
+    }
+
+    &.item--switch3 {
+    }
+
+    &.item--switch4 {
+    }
+
+    &.item--switch5 {
+    }
+
+    &.item-dimmer1 {
+    }
+
+    &.item-dimmer2 {
+    }
+
+    &.item-dimmer3 {
+    }
+
+    &.item-mosensor1 {
+    }
+
+    &.item-mosensor2 {
+    }
+
+    &.item--frame1 {
+      .image {
+      }
+    }
+
+    &.item--frame2 {
+      .image {
+        width: 3.5em;
+      }
+    }
+
+    &.item--frame3 {
+      .image {
+        width: 5em;
+      }
+    }
+
+    &.item--frame4 {
+      .image {
+        width: 6.5em;
+      }
+    }
+
+    &.item--frame5 {
+      .image {
+        width: 8em;
+      }
     }
   }
 }
