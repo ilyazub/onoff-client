@@ -8,7 +8,7 @@
     <div class="small-2 columns">Количество</div>
   </header>
   <ul class="row list">
-    <li ng-repeat="cartItem in cart.cartItems" class="small-12 columns item" ng-class="{ first: $first, odd: $odd, even: $even }">
+    <li ng-repeat="cartItem in cart.cartItems | orderBy: 'createdAt' : true" class="small-12 columns item" ng-class="{ first: $first, odd: $odd, even: $even }">
       <div class="row collapse">
         <h5 class="small-10 columns title tiny">{{cartItem.device.title}}</h5>
         <form class="small-1 columns">
