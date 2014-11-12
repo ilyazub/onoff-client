@@ -80,7 +80,24 @@
   }
 }
 
-.selected {
+.parameters {}
+.parameters__item {}
+.values {}
+.values__item {
+  margin-bottom: 0.5em;
+
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+
+  border: 1px solid transparent;
+  transition: 300ms linear border;
+}
+
+.selected-values {
+  margin-top: 0.5em;
+}
+
+.values__item_selected {
   border: 1px solid #000;
 
   border-radius: 5px;

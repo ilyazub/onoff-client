@@ -160,15 +160,6 @@ angular
         price: ->
           @skus.price(@parameters, @options.cart)
 
-        selectedValues: ->
-          values = []
-
-          for parameter in @parameters.models
-            value = parameter.selectedValue()
-            values.push("#{value.code} - #{value.description}")
-
-          values.join('/')
-
         toJSON: ->
           attrs = super
 
