@@ -11,7 +11,6 @@
 angular
   .module('onoffClientApp', [
     'ngRoute'
-    'ngTouch'
     'restangular'
     'ngStorage'
     'ilyazub.dragndrop-object'
