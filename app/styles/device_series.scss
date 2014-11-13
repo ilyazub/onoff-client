@@ -1,93 +1,24 @@
-.series {
-  .list {
-    .item {
-      .title {}
-
-      .device-series {
-        > .item {
-          margin-bottom: 2em;
-
-          border-bottom: 1px solid #839496;
-
-          .device-series-image {
-            position: relative;
-
-            min-height: 10em;
-
-            .layer {
-              position: absolute;
-
-              @for $i from 1 through 5 {
-                &-#{$i} {
-                  z-index: $i;
-                }
-              }
-            }
-          }
-
-          .sku-parameters {
-            .title {
-              margin-bottom: 0.5em;
-
-              font-weight: 500;
-            }
-
-            .list {
-              .item {
-                .title {}
-
-                .parameters {
-                  .list {
-                    .item {
-                      padding-left: 0.25em;
-                      margin-bottom: 1em;
-
-                      cursor: pointer;
-
-                      .image {
-                        position: relative;
-
-                        padding: 0.25em;
-
-                        height: 3.5em;
-                        width: 3.5em;
-                      }
-
-                      .unit-price {
-                        font-size: 0.75em;
-                      }
-
-                      &:hover,
-                      &.selected {
-                        .image {
-                          border: 1px solid #000;
-                          border-radius: 5px;
-                        }
-                      }
-
-                      &.selected {
-                        cursor: default;
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
 .parameters {}
 .parameters__item {}
 .values {}
 .values__item {
   margin-bottom: 0.5em;
 
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  padding-left: 0em;
+  padding-right: 0em;
+
+  cursor: pointer;
+}
+
+%values__item_selected {
+  border: 1px solid #000;
+}
+
+.values__item__image {
+  padding: 0.25em;
+
+  height: 3.5em;
+  width: 3.5em;
 
   border: 1px solid transparent;
   border-radius: 5px;
@@ -95,14 +26,19 @@
   transition: 300ms linear border-color;
 
   &:hover {
-    border: 1px solid #000;
+    @extend %values__item_selected;
   }
 }
 
-.selected-values {
-  margin-top: 0.5em;
+.values__item_selected {
+  cursor: default;
+
+  .values__item__image {
+    @extend %values__item_selected;
+  }
 }
 
-.values__item_selected {
-  border: 1px solid #000;
+
+.selected-values {
+  margin-top: 0.5em;
 }
