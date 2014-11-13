@@ -90,7 +90,13 @@
   padding-right: 0.5em;
 
   border: 1px solid transparent;
-  transition: 300ms linear border;
+  border-radius: 5px;
+
+  transition: 300ms linear border-color;
+
+  &:hover {
+    border: 1px solid #000;
+  }
 }
 
 .selected-values {
@@ -99,6 +105,4 @@
 
 .values__item_selected {
   border: 1px solid #000;
-
-  border-radius: 5px;
 }
