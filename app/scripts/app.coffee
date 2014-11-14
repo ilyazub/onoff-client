@@ -14,6 +14,8 @@ angular
     'restangular'
     'ngStorage'
     'ilyazub.dragndrop-object'
+    'angulartics'
+    'angulartics.google.analytics'
   ])
   .config [
     '$routeProvider'

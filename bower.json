@@ -9,11 +9,24 @@
     "restangular": ">=1.4.0",
     "ngstorage": ">=0.3.0",
     "foundation": "zurb/bower-foundation#>=5.4.4",
-    "angular-dragndrop-object": ">= 0.0.5"
+    "angular-dragndrop-object": ">= 0.0.5",
+    "angulartics": "~0.17.1"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.5",
     "angular-scenario": "~1.2.5"
+  },
+  "overrides": {
+    "angulartics": {
+      "main": [
+        "src/angulartics.js",
+        "src/angulartics-ga.js"
+      ]
+    },
+    "foundation": {
+      "dependencies": {
+      }
+    }
   },
   "appPath": "app"
 }
