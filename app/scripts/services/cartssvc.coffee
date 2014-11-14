@@ -13,7 +13,7 @@ angular.module('onoffClientApp')
       model.removeAll = ->
         model.remove().then(
           (cart) ->
-            model.cartItems = cart.cartItems
+            model.cartItems.length = 0
         )
 
       model.restangularizeNested = ->
