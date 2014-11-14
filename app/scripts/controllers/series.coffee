@@ -8,11 +8,12 @@
  # Controller of the onoffClientApp
 ###
 angular.module('onoffClientApp')
-  .controller 'SeriesCtrl', ($scope, $http, $routeParams, Restangular) ->
+  .controller 'SeriesCtrl', ($scope, $http, $routeParams, Restangular, CartsSvc) ->
     $scope.cartId = $routeParams.cartId
 
-    Cart = Restangular.one('carts', $scope.cartId)
-    Series = Restangular.service('series', Restangular.one('carts', $scope.cartId))
+    NonCachedRestangular = Restangular.setDefaultHttpFields(cache: false)
+    Cart = CartsSvc.one($scope.cartId)
+    Series = NonCachedRestangular.service('series', Cart)
 
     Cart.put().then(
       (cart) ->
