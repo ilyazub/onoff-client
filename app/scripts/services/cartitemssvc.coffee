@@ -29,4 +29,4 @@ angular.module('onoffClientApp')
       collection
     )
 
-    service = Restangular.service('cart_items')
+    Restangular.service('cart_items')

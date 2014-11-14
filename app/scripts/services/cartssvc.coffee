@@ -10,6 +10,12 @@
 angular.module('onoffClientApp')
   .factory 'CartsSvc', (Restangular) ->
     Restangular.extendModel('carts', (model) ->
+      model.removeAll = ->
+        model.remove().then(
+          (cart) ->
+            model.cartItems = cart.cartItems
+        )
+
       model.restangularizeNested = ->
         Restangular.restangularizeCollection(model, model.cartItems, 'cart_items')
 
