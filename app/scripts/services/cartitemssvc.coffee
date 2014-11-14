@@ -8,55 +8,25 @@
  # Factory in the onoffClientApp.
 ###
 angular.module('onoffClientApp')
-  .factory 'CartItemsSvc', [
-    'Restangular'
-    (Restangular) ->
-      Restangular.extendCollection('cart_items', (collection) ->
-        collection.add = (item) ->
-          index = collection.indexOf(item)
+  .factory 'CartItemsSvc', (Restangular) ->
+    Restangular.extendCollection('cart_items', (collection) ->
+      collection.add = (item) ->
+        index = collection.indexOf(item)
 
-          if index is -1
-            collection.push(item)
-            item.restangularizeNested()
-
-          collection
-
-        collection.delete = (item, newItem) ->
-          index = collection.indexOf(item)
-
-          if index > -1
-            collection.splice(index, 1)
-
-          collection
-
-        collection.restangularizeNested = (cart) ->
-          model.restangularizeNested(cart: cart) for model in collection
-
-          collection
+        if index is -1
+          collection.push(item)
 
         collection
-      )
 
-      Restangular.extendModel('cart_items', (model) ->
-        model.series = ->
-          model.device.series
+      collection.delete = (item, newItem) ->
+        index = collection.indexOf(item)
 
-        model.toJSON = ->
-          clone = model.plain()
-          delete clone.device
+        unless index is -1
+          collection.splice(index, 1)
 
-          clone
+        collection
 
-        model.restangularizeNested = (options = {}) ->
-          Restangular.restangularizeElement(null, model.device, 'devices')
-          model.device.restangularizeNested()
+      collection
+    )
 
-          model[key] = value for key, value in options
-
-          model
-
-        model
-      )
-
-      service = Restangular.service('cart_items')
-  ]
+    service = Restangular.service('cart_items')

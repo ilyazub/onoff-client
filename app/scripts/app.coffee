@@ -24,6 +24,9 @@ angular
         .when '/',
           templateUrl: 'views/foreman.html'
           controller: 'ForemanCtrl'
+        .when '/carts/:cartId/series',
+          templateUrl: 'views/series.html'
+          controller: 'SeriesCtrl'
         .otherwise
           redirectTo: '/'
   ]

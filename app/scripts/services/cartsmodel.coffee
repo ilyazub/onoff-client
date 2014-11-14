@@ -8,31 +8,27 @@
  # Factory in the onoffClientApp.
 ###
 angular.module('onoffClientApp')
-  .factory 'CartsModel', [
-    '$localStorage'
-    'CartsSvc'
-    (localStorage, CartsSvc) ->
-      storedCart = localStorage.cart
+  .factory 'CartsModel', ($localStorage, CartsSvc) ->
+    storedCart = $localStorage.cart
 
-      initialize: (callback) ->
-        if storedCart
-          CartsSvc.one(storedCart.id).put().then(
-            (cart) =>
-              this.initializeCart(cart, callback)
-          )
-        else
-          CartsSvc.post().then(
-            (cart) =>
-              this.initializeCart(cart, callback)
-          )
-
-      initializeCart: (cart, callback) ->
-        callback(cart)
-
-        storedCart = localStorage.$reset(
-          cart:
-            id: cart.id
+    initialize: (callback) ->
+      if storedCart
+        CartsSvc.one(storedCart.id).put().then(
+          (cart) =>
+            this.initializeCart(cart, callback)
+        )
+      else
+        CartsSvc.post().then(
+          (cart) =>
+            this.initializeCart(cart, callback)
         )
 
-        cart.restangularizeNested()
-  ]
+    initializeCart: (cart, callback) ->
+      callback(cart)
+
+      $localStorage.$reset(
+        cart:
+          id: cart.id
+      )
+
+      cart.restangularizeNested()

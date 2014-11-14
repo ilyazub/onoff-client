@@ -1,3 +1,7 @@
+<div class="row">
+  <a href="#/carts/{{cart.id}}" class="medium button radius right small-12 columns right">Посмотреть корзину</a>
+</div>
+
 <ul>
   <li ng-repeat="series in newCart.series.models" class="row">
     <div class="collapsed" ng-hide="series.expanded">
@@ -37,7 +41,7 @@
           <li ng-repeat="parameter in series.parameters.models" class="parameters__item">
             <ul class="values row">
               <li ng-repeat="value in parameter.values.models" class="values__item small-1 columns left" ng-class="{ 'values__item_selected': value.selected }" ng-click="value.select()">
-                <img ng-src="images/series/{{series.title}}/parameters/{{parameter.variable}}/values/{{value.code}}.jpg" title="{{parameter.variable}} &mdash; {{value.code}} &dash; {{value.description}}" width="100%" height="100%" class="values__item__image">
+                <img ng-src="images/series/{{series.title}}/parameters/{{parameter.variable}}/values/{{value.code}}.jpg" title="{{value.description}}" width="100%" height="100%" class="values__item__image">
               </li>
             </ul>
           </li>
@@ -53,7 +57,7 @@
           <div class="row collapse"><strong class="small-12 columns text-right">{{series.price() | currency:''}} грн</strong></div>
 
           <div class="row collapse">
-            <a ng-href="/api/carts/{{cart.id}}/series/{{series.id}}.xml" class="button radius success small-12 columns" target="_blank">Выгрузить артикулы</a>
+            <a ng-href="/api/carts/{{newCart.id}}/series/{{series.id}}.xml" class="button radius success small-12 columns" target="_blank">Выгрузить артикулы</a>
           </div>
         </div>
       </div>

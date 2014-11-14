@@ -8,16 +8,12 @@
  # Factory in the onoffClientApp.
 ###
 angular.module('onoffClientApp')
-  .factory 'CartsSvc', [
-    'Restangular'
-    (Restangular) ->
-      Restangular.extendModel('carts', (model) ->
-        model.restangularizeNested = ->
-          Restangular.restangularizeCollection(model, model.cartItems, 'cart_items')
-          model.cartItems.restangularizeNested(model)
+  .factory 'CartsSvc', (Restangular) ->
+    Restangular.extendModel('carts', (model) ->
+      model.restangularizeNested = ->
+        Restangular.restangularizeCollection(model, model.cartItems, 'cart_items')
 
-        model
-      )
+      model
+    )
 
-      Restangular.service('carts')
-  ]
+    Restangular.service('carts')
