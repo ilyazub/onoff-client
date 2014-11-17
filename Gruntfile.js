@@ -28,7 +28,7 @@ module.exports = function (grunt) {
       },
       coffee: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.{coffee,litcoffee,coffee.md}'],
-        tasks: ['newer:coffee:dist']
+        tasks: ['newer:coffee:dist', 'newer:eslint:dist']
       },
       coffeeTest: {
         files: ['test/spec/{,*/}*.{coffee,litcoffee,coffee.md}'],
@@ -117,6 +117,21 @@ module.exports = function (grunt) {
       options: {
         jshintrc: '.jshintrc',
         reporter: require('jshint-stylish')
+      },
+      all: {
+        src: [
+          'Gruntfile.js'
+        ]
+      }
+    },
+
+    eslint: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '.tmp/scripts/',
+          src: '{,*/}*.js'
+        }]
       },
       all: {
         src: [
@@ -456,7 +471,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('default', [
-    'newer:jshint',
+    'newer:eslint',
     'test',
     'build'
   ]);
