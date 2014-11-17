@@ -31,4 +31,6 @@ angular.module('onoffClientApp')
           id: cart.id
       )
 
+      storedCart = $localStorage.cart
+
       cart.restangularizeNested()
