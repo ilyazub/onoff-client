@@ -2,19 +2,19 @@
   "name": "onoff-client",
   "version": "0.0.0",
   "dependencies": {
-    "angular": "~1.3.0",
-    "json3": ">=3.3.1",
-    "es5-shim": ">=3.1.0",
-    "angular-route": "~1.3.0",
-    "restangular": ">=1.4.0",
-    "ngstorage": ">=0.3.0",
-    "foundation": "zurb/bower-foundation#>=5.4.4",
-    "angular-dragndrop-object": ">= 0.0.5",
+    "angular": "~1.3.3",
+    "json3": "~3.3.1",
+    "es5-shim": "~3.1.0",
+    "angular-route": "~1.3.3",
+    "restangular": "~1.4.0",
+    "ngstorage": "~0.3.0",
+    "foundation": "zurb/bower-foundation#~5.4.4",
+    "angular-dragndrop-object": "~0.0.5",
     "angulartics": "~0.17.1"
   },
   "devDependencies": {
-    "angular-mocks": "~1.2.5",
-    "angular-scenario": "~1.2.5"
+    "angular-mocks": "~1.3.3",
+    "angular-scenario": "~1.3.3"
   },
   "overrides": {
     "angulartics": {
@@ -24,9 +24,11 @@
       ]
     },
     "foundation": {
-      "dependencies": {
-      }
+      "dependencies": {}
     }
   },
-  "appPath": "app"
+  "appPath": "app",
+  "resolutions": {
+    "angular": "~1.3.3"
+  }
 }
