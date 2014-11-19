@@ -420,7 +420,18 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.coffee',
         singleRun: true
       }
-    }
+    },
+
+    buildcontrol: {
+      dist: {
+        options: {
+          remote: 'git@github.com:ilyazub/onoff-client.git',
+          branch: 'gh-pages',
+          commit: true,
+          push: true
+        }
+      }
+    },
   });
 
 
@@ -468,6 +479,13 @@ module.exports = function (grunt) {
     'filerev',
     'usemin',
     'htmlmin'
+  ]);
+
+  grunt.registerTask('deploy', [
+    // 'check',
+    // 'test',
+    'build',
+    'buildcontrol'
   ]);
 
   grunt.registerTask('default', [
