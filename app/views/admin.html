@@ -1,0 +1,42 @@
+<article class="row">
+  <h2>Шахматка</h2>
+
+  <table ng-repeat="deviceGroup in deviceGroups">
+    <caption>{{deviceGroup.title}}</caption>
+    <thead>
+      <tr>
+        <th></th>
+        <th ng-repeat="range in ranges">
+          <input type="text" ng-model="range.title" class="input_borderless">
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="device in deviceGroup.devices">
+        <td style="vertical-align: top">
+          <input type="text" ng-model="device.title" class="input_borderless">
+        </td>
+        <td ng-repeat="deviceRange in device.deviceRanges" style="vertical-align: top">
+          <ul>
+            <li ng-repeat="sku in deviceRange.skus">
+              <input type="text" ng-model="sku.title" class="input_borderless">
+              <span class="amount" ng-if="sku.amount > 1"><input type="number" ng-model="sku.amount" class="input_borderless"></span>
+            </li>
+          </ul>
+        </td>
+      </tr>
+      <tr style="background-color: #aaa;"><td></td></tr>
+      <tr>
+        <table ng-repeat="parameter in deviceGroup.parameters">
+          <caption>{{parameter.variable}} &mdash; {{parameter.description}}</caption>
+          <tbody>
+            <tr>
+              <td></td>
+              <td ng-repeat="value in parameter.values">{{value.code}} &mdash; {{value.description}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </tr>
+    </tbody>
+  </table>
+</article>

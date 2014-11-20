@@ -27,6 +27,9 @@ angular
         .when '/carts/:cartId/series',
           templateUrl: 'views/series.html'
           controller: 'SeriesCtrl'
+        .when '/admin',
+          templateUrl: '/views/admin.html'
+          controller: 'AdminCtrl'
         .otherwise
           redirectTo: '/'
   ]

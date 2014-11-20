@@ -423,12 +423,16 @@ module.exports = function (grunt) {
     },
 
     buildcontrol: {
-      dist: {
+      options: {
+        dir: 'dist',
+        commit: true,
+        push: true,
+        message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
+      },
+      pages: {
         options: {
           remote: 'git@github.com:ilyazub/onoff-client.git',
-          branch: 'gh-pages',
-          commit: true,
-          push: true
+          branch: 'gh-pages'
         }
       }
     },
