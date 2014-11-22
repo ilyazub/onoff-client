@@ -6,6 +6,7 @@
       <legend>Электронные таблицы</legend>
       <label>Шахматка<input type="file" name="uploads.catalogue" file-input="uploads.catalogue"></label>
       <label>Прайс-лист<input type="file" name="uploads.priceList" file-input="uploads.priceList"></label>
+      <label><input type="checkbox" name="uploads.clearDb" ng-model="uploads.clearDb"> Очистить БД перед импортом</label>
     </fieldset>
     <fieldset ng-hide="true">
       <legend>Картинки</legend>
@@ -14,6 +15,6 @@
       <label>Параметры<input type="file" name="uploads.images.parameters" file-input="uploads.images.parameters" multiple accept="image/*"></label>
     </fieldset>
 
-    <button class="button success">Загрузить</button>
+    <button class="button success" ng-class="{ disabled: uploads.isUploading }" ng-disabled="uploads.isUploading">{{uploads.submitButtonLabel}}</button>
   </form>
 </article>
