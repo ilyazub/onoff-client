@@ -8,9 +8,13 @@
       <label>Прайс-лист<input type="file" name="uploads.priceList" file-input="uploads.priceList"></label>
       <label><input type="checkbox" name="uploads.clearDb" ng-model="uploads.clearDb"> Очистить БД перед импортом</label>
     </fieldset>
-    <fieldset>
+    <fieldset ng-hide="true">
       <legend>Картинки</legend>
       <label><input type="file" name="uploads.images" file-input="uploads.images" multiple accept="image/*"></label>
+
+      <ul class="row">
+        <li class="small-2 columns left" ng-repeat="file in uploads.images">{{file.name}}</li>
+      </ul>
     </fieldset>
 
     <button class="button success" ng-class="{ disabled: uploads.isUploading }" ng-disabled="uploads.isUploading">{{uploads.submitButtonLabel}}</button>
