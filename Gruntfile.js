@@ -11,8 +11,11 @@ module.exports = function (grunt) {
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
-    dist: 'dist'
+    dist: 'dist',
+    imagesDir: '../onoff-images'
   };
+
+  var proxyRequest = require('grunt-connect-proxy/lib/utils').proxyRequest;
 
   // Define the configuration for all the tasks
   grunt.initConfig({
@@ -74,16 +77,19 @@ module.exports = function (grunt) {
       ],
       livereload: {
         options: {
-          open: true,
           middleware: function (connect) {
             return [
-              require('grunt-connect-proxy/lib/utils').proxyRequest,
+              proxyRequest,
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',
                 connect.static('./bower_components')
               ),
-              connect.static(appConfig.app)
+              connect.static(appConfig.app),
+              connect().use(
+                '/images',
+                connect.static(appConfig.imagesDir)
+              )
             ];
           }
         }
@@ -99,14 +105,17 @@ module.exports = function (grunt) {
                 '/bower_components',
                 connect.static('./bower_components')
               ),
-              connect.static(appConfig.app)
+              connect.static(appConfig.app),
+              connect().use(
+                '/images',
+                connect.static(appConfig.imagesDir)
+              )
             ];
           }
         }
       },
       dist: {
         options: {
-          open: true,
           base: '<%= yeoman.dist %>'
         }
       }
@@ -244,8 +253,6 @@ module.exports = function (grunt) {
           '<%= yeoman.dist %>/scripts/{,*/}*.js',
           '<%= yeoman.dist %>/styles/{,*/}*.css',
           '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-          '!<%= yeoman.dist %>/images/devices/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-          '!<%= yeoman.dist %>/images/series/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
           '<%= yeoman.dist %>/styles/fonts/*'
         ]
       }
