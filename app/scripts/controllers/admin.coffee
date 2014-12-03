@@ -46,7 +46,7 @@ angular.module('onoffClientApp')
       appendFormData(formData, $scope.uploads.catalogue, 'catalogue')
       appendFormData(formData, $scope.uploads.priceList, 'price_list')
       formData.append('clear_db', $scope.uploads.clearDb)
-      # uploadImages()
+      uploadImages()
 
       $scope.uploads.isUploading = true
       $scope.uploads.submitButtonLabel = 'Загружаю...'
